@@ -22,11 +22,56 @@ const cmd = new Command('astro')
     })
 
 cmd
-    .usage({
-        header: 'Build',
-        content: '',
-    })
     .usage(cmd.optionsSection())
+    .usage({
+        header: 'Operations',
+        content: [
+            {
+                name: 'new',
+                summary: 'Creates package at new directory',
+            },
+            {
+                name: 'init',
+                summary: 'Initializes package'
+            },
+            {
+                name: 'clean',
+                summary: 'Clears '
+            },
+            {
+                name: '',
+                summary: ''
+            },
+            {
+                name: '',
+                summary: ''
+            },
+            {
+                name: '',
+                summary: ''
+            },
+            {
+                name: '',
+                summary: ''
+            },
+            {
+                name: '',
+                summary: ''
+            },
+            {
+                name: '',
+                summary: ''
+            },
+            {
+                name: '',
+                summary: ''
+            },
+            {
+                name: '',
+                summary: ''
+            },
+        ],
+    })
 
 const args = cmd.parse(process.argv.slice(2))
 
