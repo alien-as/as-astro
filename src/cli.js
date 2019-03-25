@@ -67,6 +67,8 @@ class Command {
                 { argv, stopAtFirstUnknown: true })
             const {__command: command} = args
             if (command) {
+                if (command === 'help')
+                    this.printUsage()
                 const f = o[command]
                 if (f) {
                     const cmd = this._subCommands.get(command)
@@ -82,8 +84,7 @@ class Command {
                 console.error(`Unknown option: ${args._unknown[0]}`)
                 process.exit(1)
             } else if (args.help) {
-                console.log(this.usageString())
-                process.exit(0)
+                this.printUsage()
             } else return args
         } catch (e) {
             console.error(e.message)
@@ -93,6 +94,11 @@ class Command {
 
     usageString() {
         return commandLineUsage(this._usage)
+    }
+
+    printUsage() {
+        console.log(this.usageString())
+        process.exit(0)
     }
 }
 
