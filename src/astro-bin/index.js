@@ -35,10 +35,6 @@ cmd
                 summary: 'Initializes package',
             },
             {
-                name: 'clean',
-                summary: 'Cleans ',
-            },
-            {
                 name: '',
                 summary: ''
             },
