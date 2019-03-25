@@ -8,7 +8,12 @@ const commandLineArgs = require('command-line-args')
 class Command {
     constructor(name) {
         this.name = name
-        this._options = []
+        this._options = [
+            {
+                name: 'help',
+                type: Boolean,
+            }
+        ]
         this._usage = []
         this._subCommands = null
         this._subCommandOperation = new Map
@@ -73,11 +78,13 @@ class Command {
                     console.error(`Unknown operation: ${command}`)
                     process.exit(1)
                 }
-            } else {
+            } else if (args._unknown) {
                 console.error(`Unknown option: ${args._unknown[0]}`)
                 process.exit(1)
-            }
-            return args
+            } else if (args.help) {
+                console.log(this.usageString())
+                process.exit(0)
+            } else return args
         } catch (e) {
             console.error(e.message)
             process.exit(1)
