@@ -1,4 +1,4 @@
-//! Abstraction over
+//! One-object form for
 //! `command-line-args` and
 //! `command-line-usage`.
 
@@ -6,21 +6,23 @@ const commandLineArgs = require('command-line-args')
     , commandLineUsage = require('command-line-usage')
 
 class Command {
-    constructor() {
+    constructor(name) {
+        this.name = name
         this._options = []
-        this._helpSections = []
+        this._usage = []
+        this._subCommands = null
+    }
+
+    subCommand(command) {
+        if (!this._subCommands)
+            this._subCommands = new Map
+        this._subCommands.set(command.name, command)
     }
 
     /// <chainable/>
     ///
-    helpSections(...sections) {
-        for (let sec of sections)
-            this._helpSections.push(sec)
-    }
-
-    option(option) {
-        this._options.push(option)
-        return this
+    usage(section) {
+        this._usage.push(section)
     }
 
     optionsSection() {
@@ -28,6 +30,24 @@ class Command {
             header: 'Options',
             optionList: this._options,
         }
+    }
+
+    option(option) {
+        this._options.push(option)
+        return this
+    }
+
+    parse(argv) {
+        try {
+            ...
+        } catch (e) {
+            console.error(e.message)
+            process.exit(1)
+        }
+    }
+
+    getUsage() {
+        ...
     }
 }
 
