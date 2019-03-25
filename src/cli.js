@@ -16,7 +16,7 @@ class Command {
         ]
         this._usage = []
         this._subCommands = null
-        this._subCommandOperation = new Map
+        this._subCommandFunction = new Map
     }
 
     subCommand(command) {
@@ -24,24 +24,25 @@ class Command {
             this._subCommands = new Map
             this._options.push({
                 name: '__command',
-                defaultValue: true,
+                defaultOption: true,
             })
         }
         this._subCommands.set(command.name, command)
+        return this
     }
 
     /// <chainable/>
     ///
     usage(section) {
-        if (section.optionList)
-            section.hide = '__command'
         this._usage.push(section)
+        return this
     }
 
     optionsSection() {
         return {
             header: 'Options',
             optionList: this._options,
+            hide: '__command',
         }
     }
 
@@ -50,15 +51,16 @@ class Command {
         return this
     }
 
-    /// Maps operations to matched sub-commands.
+    /// Maps functions to matched sub-commands.
     ///
     /// A `'#!'`-key property is treated
     /// specially. It'll be called as `f(name)`
     /// if a given sub-command doesn't exist.
     ///
-    subCommandOperation(o) {
+    subCommandFunction(o) {
         for (let k in o)
-            this._subCommandOperations.set(k, o[k])
+            this._subCommandFunction.set(k, o[k])
+        return this
     }
 
     parse(argv) {
@@ -69,6 +71,7 @@ class Command {
             if (command) {
                 if (command === 'help')
                     this.printUsage()
+                const {_subCommandFunction: o} = this
                 const f = o[command]
                 if (f) {
                     const cmd = this._subCommands.get(command)
