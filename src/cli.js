@@ -21,13 +21,8 @@ class Command {
     }
 
     subCommand(command) {
-        if (!this._subCommands) {
+        if (!this._subCommands)
             this._subCommands = new Map
-            this._options.push({
-                name: '__command',
-                defaultOption: true,
-            })
-        }
         this._subCommands.set(command.name, command)
         return this
     }
@@ -43,7 +38,6 @@ class Command {
         return {
             header: 'Options',
             optionList: this._options,
-            hide: '__command',
         }
     }
 
@@ -69,23 +63,23 @@ class Command {
             const args = commandLineArgs(this._options,
                 { argv, stopAtFirstUnknown: true })
 
-            const {__command: command} = args
+            const [command] = args._unknown ? args._unknown : [ '' ]
 
-            if (command === 'help')
+            if (command === 'help'
+             && args._unknown.length === 1)
                 this.printUsage()
             if (command) {
                 const {_subCommandFunction: o} = this
                 const f = o.get(command)
                 if (f) {
                     const cmd = this._subCommands.get(command)
-                    const fArgs = args._unknown || []
-                    if (args.help) fArgs.push('-h')
+                    const fArgs = args._unknown.slice(1)
                     const argsF = cmd.parse(fArgs)
                     if (argsF) f(cmd, argsF)
                     return null
                 }
                 else if (o['#!'])
-                    o['#!'](args._unknown)
+                    o['#!'](args._unknown.slice(1))
                 else {
                     console.error(`Unknown operation: ${command}`)
                     process.exit(1)
