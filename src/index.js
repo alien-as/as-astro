@@ -7,9 +7,10 @@ const cmd = new Command('astro')
     })
     .subCommand(new Command('new'))
     .subCommandFunction({
-        'new': _ => {
+        'new': args => {
+            console.log('a')
             // ...
-        }
+        },
     })
 
 console.log(cmd.parse(process.argv.slice(2)))

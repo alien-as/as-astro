@@ -72,11 +72,11 @@ class Command {
                 if (command === 'help')
                     this.printUsage()
                 const {_subCommandFunction: o} = this
-                const f = o[command]
+                const f = o.get(command)
                 if (f) {
                     const cmd = this._subCommands.get(command)
-                    const args = cmd.parse(args._unknown))
-                    if (args) f(args)
+                    const args2 = cmd.parse(args._unknown || [])
+                    if (args2) f(args2)
                     return null
                 }
                 else if (o['#!'])
