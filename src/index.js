@@ -5,7 +5,11 @@ const cmd = new Command('astro')
         header: 'Build',
         content: 'FOXL9',
     })
-    .subCommand(new Command('new'))
+    .subCommand(new Command('new')
+        .usage({
+            header: 'Synopsis',
+            content: 'Ulala!',
+        }))
     .subCommandFunction({
         'new': (command, args) => {
             // ...
