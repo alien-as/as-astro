@@ -5,6 +5,10 @@ class Command {
     constructor() {
         this.
     }
+
+    /// <chainable/>
+    ///
+    help() {}
 }
 
 module.exports = { Command, }
