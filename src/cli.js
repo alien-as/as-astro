@@ -38,6 +38,7 @@ class Command {
         return {
             header: 'Options',
             optionList: this._options,
+            hide: ['help']
         }
     }
 

@@ -1,10 +1,6 @@
 const {Command} = require('./cli')
 
 const cmd = new Command('astro')
-    .usage({
-        header: 'Build',
-        content: 'FOXL9',
-    })
     .option({
         name: 'version',
         alias: 'V',
@@ -20,6 +16,13 @@ const cmd = new Command('astro')
             // ...
         },
     })
+
+cmd
+    .usage({
+        header: 'Build',
+        content: '',
+    })
+    .usage(cmd.optionsSection())
 
 const args = cmd.parse(process.argv.slice(2))
 
