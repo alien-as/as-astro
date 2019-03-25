@@ -32,11 +32,11 @@ cmd
             },
             {
                 name: 'init',
-                summary: 'Initializes package'
+                summary: 'Initializes package',
             },
             {
                 name: 'clean',
-                summary: 'Clears '
+                summary: 'Cleans ',
             },
             {
                 name: '',
