@@ -69,6 +69,14 @@ class Command {
              && args._unknown.length === 1)
                 this.printUsage()
             if (command) {
+                // Command not eligible after given
+                // options.
+                for (let k in args) {
+                    if (k !== '_unknown') {
+                        console.error(`Unknown option: ${args._unknown[0]}`)
+                        process.exit(1)
+                    }
+                }
                 const {_subCommandFunction: o} = this
                 const f = o.get(command)
                 if (f) {

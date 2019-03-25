@@ -5,6 +5,11 @@ const cmd = new Command('astro')
         header: 'Build',
         content: 'FOXL9',
     })
+    .option({
+        name: 'version',
+        alias: 'V',
+        type: Boolean,
+    })
     .subCommand(new Command('new')
         .usage({
             header: 'Synopsis',
@@ -16,4 +21,10 @@ const cmd = new Command('astro')
         },
     })
 
-console.log(cmd.parse(process.argv.slice(2)))
+const args = cmd.parse(process.argv.slice(2))
+
+if (args) {
+    if (args.version) {
+        console.log('Astro FOXL9')
+    }
+}
