@@ -15,8 +15,13 @@ class Command {
     }
 
     subCommand(command) {
-        if (!this._subCommands)
+        if (!this._subCommands) {
             this._subCommands = new Map
+            this._options.push({
+                name: '__command',
+                defaultValue: true,
+            })
+        }
         this._subCommands.set(command.name, command)
     }
 
@@ -24,7 +29,7 @@ class Command {
     ///
     usage(section) {
         if (section.optionList)
-            section.hide = 'command'
+            section.hide = '__command'
         this._usage.push(section)
     }
 
@@ -51,30 +56,26 @@ class Command {
             this._subCommandOperations.set(k, o[k])
     }
 
-    parse() {
+    parse(argv) {
         try {
             const args = commandLineArgs(this._options,
-                { stopAtFirstUnknown: true })
-            if (args._unknown) {
-                if (args.command && args.command[0] !== '-') {
-                    const f = o[args.command]
-                    if (f) {
-                        const cmd = this._subCommands.get(args.command)
-                        return cmd.parse(???)
-                    }
-                    else if (o['#!'])
-                        o['#!'](args._unknown, args)
-                    else {
-                        console.error(`Unknown sub-command: ${args.command}`)
-                        process.exit(1)
-                    }
-                } else {
-                    console.error(`Unknown option: ${args._unknown[0]}`)
-                    console.exit(1)
+                { argv, stopAtFirstUnknown: true })
+            const {__command: command} = args
+            if (command) {
+                const f = o[command]
+                if (f) {
+                    const cmd = this._subCommands.get(command)
+                    return cmd.parse(args._unknown)
                 }
-            }
-            if (args._help) {
-                ...
+                else if (o['#!'])
+                    o['#!'](args._unknown)
+                else {
+                    console.error(`Unknown operation: ${command}`)
+                    process.exit(1)
+                }
+            } else {
+                console.error(`Unknown option: ${args._unknown[0]}`)
+                process.exit(1)
             }
             return args
         } catch (e) {
@@ -89,11 +90,3 @@ class Command {
 }
 
 module.exports = { Command, }
-
-function findSubCommand(argv) {
-    ???
-    for (let s of argv) {
-        if (s[0] !== '-') return s
-    }
-    return ''
-}
