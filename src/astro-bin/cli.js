@@ -69,7 +69,7 @@ class Command {
             if (command === 'help'
              && args._unknown.length === 1)
                 this.printUsage()
-            if (command) {
+            if (command && command[0] !== '-') {
                 // Command not eligible after given
                 // options.
                 for (let k in args) {

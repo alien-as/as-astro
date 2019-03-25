@@ -2,7 +2,10 @@
   "name": "astro",
   "version": "0.1.0",
   "description": "AS package manager",
-  "main": "index.js",
+  "main": "astro-lib/index.js",
+  "bin": {
+    "astro": "bin/astro"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

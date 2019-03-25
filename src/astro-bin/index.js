@@ -10,6 +10,10 @@ const cmd = new Command('astro')
         .usage({
             header: 'Synopsis',
             content: 'Ulala!',
+        })
+        .option({
+            name: 'name',
+            defaultOption: true,
         }))
     .subCommandFunction({
         'new': (command, args) => {
