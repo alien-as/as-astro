@@ -75,7 +75,9 @@ class Command {
                 const f = o[command]
                 if (f) {
                     const cmd = this._subCommands.get(command)
-                    return cmd.parse(args._unknown)
+                    const args = cmd.parse(args._unknown))
+                    if (args) f(args)
+                    return null
                 }
                 else if (o['#!'])
                     o['#!'](args._unknown)
