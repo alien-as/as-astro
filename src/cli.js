@@ -11,6 +11,7 @@ class Command {
         this._options = [
             {
                 name: 'help',
+                alias: 'h',
                 type: Boolean,
             }
         ]
@@ -67,16 +68,20 @@ class Command {
         try {
             const args = commandLineArgs(this._options,
                 { argv, stopAtFirstUnknown: true })
+
             const {__command: command} = args
+
+            if (command === 'help')
+                this.printUsage()
             if (command) {
-                if (command === 'help')
-                    this.printUsage()
                 const {_subCommandFunction: o} = this
                 const f = o.get(command)
                 if (f) {
                     const cmd = this._subCommands.get(command)
-                    const args2 = cmd.parse(args._unknown || [])
-                    if (args2) f(args2)
+                    const fArgs = args._unknown || []
+                    if (args.help) fArgs.push('-h')
+                    const argsF = cmd.parse(fArgs)
+                    if (argsF) f(cmd, argsF)
                     return null
                 }
                 else if (o['#!'])
@@ -85,12 +90,14 @@ class Command {
                     console.error(`Unknown operation: ${command}`)
                     process.exit(1)
                 }
-            } else if (args._unknown) {
+            }
+            else if (args._unknown) {
                 console.error(`Unknown option: ${args._unknown[0]}`)
                 process.exit(1)
-            } else if (args.help) {
+            }
+            else if (args.help)
                 this.printUsage()
-            } else return args
+            else return args
         } catch (e) {
             console.error(e.message)
             process.exit(1)

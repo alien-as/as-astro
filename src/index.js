@@ -7,8 +7,7 @@ const cmd = new Command('astro')
     })
     .subCommand(new Command('new'))
     .subCommandFunction({
-        'new': args => {
-            console.log('a')
+        'new': (command, args) => {
             // ...
         },
     })
