@@ -89,3 +89,11 @@ class Command {
 }
 
 module.exports = { Command, }
+
+function findSubCommand(argv) {
+    ???
+    for (let s of argv) {
+        if (s[0] !== '-') return s
+    }
+    return ''
+}
