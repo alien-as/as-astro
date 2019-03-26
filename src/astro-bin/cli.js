@@ -67,9 +67,11 @@ class Command {
             const [command] = args._unknown ? args._unknown : [ '' ]
 
             if (command === 'help'
-             && args._unknown.length === 1)
-                this.printUsage()
-            if (command && command[0] !== '-') {
+             && args._unknown.length === 1) {
+                args.help = true
+                return args
+            }
+            else if (command && command[0] !== '-') {
                 // Command not eligible after given
                 // options.
                 for (let k in args) {
@@ -98,8 +100,6 @@ class Command {
                 console.error(`Unknown option: ${args._unknown[0]}`)
                 process.exit(1)
             }
-            else if (args.help)
-                this.printUsage()
             else return args
         } catch (e) {
             console.error(e.message)
