@@ -1,6 +1,7 @@
 const {spawnSync} = require('child_process')
 const fs = require('fs')
     , path = require('path')
+const chalk = require('chalk')
 
 function init(basePath, name, kind) {
     if (!fs.existsSync(path.join(basePath, '.git'))) {
@@ -69,15 +70,18 @@ function includeDir(p) {
 }
 
 function gitGlobalUser() {
-    const r1 = retrieveGitGlobalKey('user.name')
-        , email = retrieveGitGlobalKey('user.email').stdout.replace(/[\n\r]/g, '')
+	const enc = { encoding: 'utf8' }
+    const r1 = retrieveGitGlobalKey('user.name', enc)
+        , r2 = retrieveGitGlobalKey('user.email', enc)
     if (r1.status) {
-        console.error('Failed to execute Git. If you haven\'nt it installed, see:\n\
-  https://git-scm.com/downloads')
+        console.error('Failed to execute Git. \
+If you haven\'nt it installed, browse:\n\
+ ${chalk.cyan('https://git-scm.com/downloads')})
         process.exit(1)
     }
 
     const name = r1.stdout.replace(/[\n\r]/g, '')
+        , email = r2.stdout.replace(/[\n\r]/g, '')
 
     if (!name || !email) {
         console.error(`Missing user info.\n
