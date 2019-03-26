@@ -6,7 +6,7 @@ module.exports = {
         return chalk.green(msg)
     },
 
-    fmtSuccessTerm(msg) {
-        return successTermColor.bold(term)
+    fmtSuccessTerm(s) {
+        return successTermColor.bold(s)
     },
 }

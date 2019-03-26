@@ -1,0 +1,9 @@
+[package]
+name = 'vvvvvv'
+version = '0.1.0'
+authors = ['hydroper <hydroperhh@gmail.com>']
+
+[dependencies]
+
+[bin]
+include = ['']

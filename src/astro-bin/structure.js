@@ -7,7 +7,7 @@ const {stringFmt} = require('./utils')
 /// Initialize package directory.
 ///
 function init(basePath, name, kind) {
-	const baseDirIndex = basePath.length
+	const baseDirIndex = basePath.length + 1
 
     // `.git` data
     if (!fs.existsSync(path.join(basePath, '.git'))) {
@@ -36,9 +36,9 @@ function init(basePath, name, kind) {
         fs.mkdirSync(srcPath)
         const f = fs.readFileSync(path.join(__dirname, 'assets/main.as'), { encoding: 'utf-8' })
         fs.writeFileSync(path.join(srcPath, 'main.as'), f)
-        sources.push('src/main.as')
+        sources.push(path.join(srcPath, 'main.as'))
     }
-    
+
     const rawSources = sources.map(p => includeDir(p.slice(baseDirIndex))).join(', ')
 
     // Write `astro.toml`

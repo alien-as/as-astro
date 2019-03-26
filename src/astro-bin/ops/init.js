@@ -44,8 +44,8 @@ cmd
                 if (!name) name = path.basename(basePath)
                 const kind = args.lib ? 'lib' : 'bin'
                 structure.init(basePath, name, kind)
-                console.log(chalk.green('Initialized package ')
-                          + chalk.rgb(0x1A, 0xFF, 0x30).bold(name))
+                console.log(clfmt.fmtSuccess('Initialized package ')
+                          + clfmt.fmtSuccessTerm(name))
             },
             cause => void 0)
     })
