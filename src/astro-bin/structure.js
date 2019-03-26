@@ -51,12 +51,14 @@ include = [${src.map(includeDir).join(', ')}]\
 
 function captureScriptDirs(dest, p) {
     let pushed = false
-    for (let f of fs.readdirSync(p)) {
-        if (fs.statSync(f).isDirectory())
-            captureScriptDirs(dest, f)
-        else if (path.parse(f).ext === '.as') {
+    for (let p2 of fs.readdirSync(p)) {
+        if (p2 === '.git') continue
+        p2 = path.resolve(p, p2)
+        if (fs.statSync(p2).isDirectory())
+            captureScriptDirs(dest, p2)
+        else if (path.parse(p2).ext === '.as') {
             if (pushed) continue
-            dest.push(path.join(p, '%2A%2A'))
+            dest.push(path.join(p2, '%2A%2A'))
             pushed = true
         }
     }
@@ -78,11 +80,13 @@ function gitGlobalUser() {
     const {stdout: name} = r1
 
     if (!name || !email) {
-        console.error(`Please enter Git user info.\n
+        console.error(`Missing user info.\n
   $ git config --global user.name nickname
   $ git config --global user.email email\n`)
         process.exit(1)
     }
+    
+    return `${name} <${email}>`
 }
 
 function retrieveGitGlobalKey(k) {
