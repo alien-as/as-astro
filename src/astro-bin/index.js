@@ -1,5 +1,6 @@
 const {Command} = require('./cli')
 const {
+    bcCmd,
     newCmd,
     initCmd,
 } = require('./ops')
@@ -18,16 +19,16 @@ cmd
         header: 'Operations',
         content: [
             {
+                name: 'bc',
+                summary: 'Manages compilers'
+            },
+            {
                 name: 'new',
                 summary: 'Creates package at new directory',
             },
             {
                 name: 'init',
                 summary: 'Initializes package',
-            },
-            {
-                name: '',
-                summary: ''
             },
             {
                 name: '',
