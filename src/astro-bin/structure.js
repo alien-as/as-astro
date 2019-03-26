@@ -1,5 +1,4 @@
 const {spawnSync} = require('child_process')
-const parseGitConfig = require('parse-git-config')
 const fs = require('fs')
     , path = require('path')
 
@@ -11,21 +10,9 @@ function init(basePath, name, kind) {
 
     const configPath = path.join(basePath, 'astro.toml')
     if (fs.existsSync(configPath))
-      return
+        return
 
-    const cfg = parseGitConfig.sync({ cwd: basePath, })
-    console.log(cfg)
-    const {user} = cfg
-    // Fix ???
-
-    if (!user || !user.name || !user.email) {
-        console.error(`Please enter Git user info.\n
-  $ git config --global user.name nickname
-  $ git config --global user.email email\n`)
-        process.exit(1)
-    }
-
-    let author = `${user.name} <${user.email}>`
+    const author = gitGlobalUser()
 
     let src = []
     captureScriptDirs(src, basePath)
@@ -77,6 +64,29 @@ function captureScriptDirs(dest, p) {
 
 function includeDir(p) {
     return `'${p.replace(/'/g, '%27')}'`
+}
+
+function gitGlobalUser() {
+    const r1 = retrieveGitGlobalKey('user.name')
+        , {stdout: email} = retrieveGitGlobalKey('user.email')
+    if (r1.status) {
+        console.error('Failed to execute Git. If you haven\'nt it installed, see:\n\
+  ')
+        process.exit(1)
+    }
+
+    const {stdout: name} = r1
+
+    if (!name || !email) {
+        console.error(`Please enter Git user info.\n
+  $ git config --global user.name nickname
+  $ git config --global user.email email\n`)
+        process.exit(1)
+    }
+}
+
+function retrieveGitGlobalKey(k) {
+    return spawnSync('git', ['config', '--global', '--get', k])
 }
 
 module.exports = { init, }
