@@ -1,3 +1,4 @@
+const {spawn} = require('child_process')
 const gitUserInfo = require('git-user-info')
 const fs = require('fs')
     , path = require('path')
@@ -47,12 +48,12 @@ include = [${src.map(s => `'${s.replace(/\'/g, '%27'}'`).join(', ')}]\
 
     if (!fs.exists(path.join(basePath, '.git'))) {
         // $ git init
-        ...
+        spawn('git', ['init'], { cwd: basePath, })
     }
 
     const gitIgnorePath = path.join(basePath, '.gitignore')
     if (!fs.exists(gitIgnorePath))
-      fs.writeFile(gitIgnorePath, `\
+        fs.writeFile(gitIgnorePath, `\
 /target
 /astro.lock`)
 }

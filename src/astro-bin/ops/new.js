@@ -1,6 +1,7 @@
 const {Command} = require('../cli')
 const fs = require('fs')
     , path = require('path')
+const structure = require('../structure')
 
 const cmd = new Command('new')
 
@@ -38,8 +39,9 @@ cmd
             process.exit(1)
         }
 
-        fs.mkdir(path)
-        ...
+        fs.mkdir(basePath)
+        const kind = args.lib ? 'lib' : 'bin'
+        structure.init(basePath, name, kind)
     })
 
 module.exports = cmd
