@@ -15,11 +15,15 @@ function init(basePath, name, kind) {
         spawnSync('git', ['init'], { cwd: basePath, })
     }
 
-    // Remains intact with a
-    // `astro.toml`.
+    // Write `.gitignore`
+    const gitIgnorePath = path.join(basePath, '.gitignore')
+    if (!fs.existsSync(gitIgnorePath))
+        fs.writeFileSync(gitIgnorePath, '/target\n/astro.lock')
+
+    // Remains intact with a `astro.toml`.
     const configPath = path.join(basePath, 'astro.toml')
     if (fs.existsSync(configPath))
-        return
+        process.exit(0)
 
     const author = gitGlobalUser()
 
@@ -42,11 +46,6 @@ function init(basePath, name, kind) {
         'assets/astro.toml', { encoding: 'utf-8' }))
     fs.writeFileSync(configPath, stringFmt(cfg,
         name, author, kind, rawSources))
-
-    // Write `.gitignore`
-    const gitIgnorePath = path.join(basePath, '.gitignore')
-    if (!fs.existsSync(gitIgnorePath))
-        fs.writeFileSync(gitIgnorePath, `/target\n/astro.lock`)
 }
 
 // Looks for directories containing

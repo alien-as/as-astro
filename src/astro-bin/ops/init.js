@@ -44,7 +44,7 @@ cmd
                 if (!name) name = path.basename(basePath)
                 const kind = args.lib ? 'lib' : 'bin'
                 structure.init(basePath, name, kind)
-                console.log(`Initialized package \`{chalk.green(name)}\``)
+                console.log(`Initialized package `${chalk.green(name)}`)
             },
             cause => void 0)
     })
