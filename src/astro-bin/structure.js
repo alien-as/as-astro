@@ -70,13 +70,12 @@ function includeDir(p) {
 }
 
 function gitGlobalUser() {
-	const enc = { encoding: 'utf8' }
     const r1 = retrieveGitGlobalKey('user.name', enc)
         , r2 = retrieveGitGlobalKey('user.email', enc)
     if (r1.status) {
-        console.error('Failed to execute Git. \
-If you haven\'nt it installed, browse:\n\
- ${chalk.cyan('https://git-scm.com/downloads')})
+        console.error(`Failed to execute Git. \
+If you haven'nt it installed, consult:\n\
+ ${chalk.cyan('https://git-scm.com/downloads')}`)
         process.exit(1)
     }
 
@@ -94,7 +93,8 @@ If you haven\'nt it installed, browse:\n\
 }
 
 function retrieveGitGlobalKey(k) {
-    return spawnSync('git', ['config', '--global', '--get', k])
+    return spawnSync('git', ['config', '--global', '--get', k],
+        { encoding: 'utf-8' })
 }
 
 module.exports = { init, }
