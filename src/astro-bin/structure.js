@@ -3,7 +3,9 @@ const fs = require('fs')
     , path = require('path')
 
 function init(basePath, name, kind) {
-    fs.mkdir(path)
+	const configPath = path.join(basePath, 'astro.toml')
+    if (fs.exists(configPath))
+      return
 
     const user = gitUserInfo()
     if (!user || !user.name || !user.email) {
@@ -17,6 +19,7 @@ function init(basePath, name, kind) {
 
     let src = []
     captureScriptDirs(src, basePath)
+
     if (!src.length && kind === 'bin') {
         const srcPath = path.join(basePath, 'src')
         fs.mkdir(srcPath)
@@ -30,7 +33,7 @@ package {
         src.push('src/main.as')
     }
 
-    fs.writeFile(path.join(basePath, 'astro.toml'), `\
+    fs.writeFile(configPath, `\
 [package]
 name = '${name}'
 version = '0.1.0'
@@ -41,6 +44,17 @@ authors = ['${author}']
 [${kind}]
 include = [${src.map(s => `'${s.replace(/\'/g, '%27'}'`).join(', ')}]\
 `)
+
+    if (!fs.exists(path.join(basePath, '.git'))) {
+        // $ git init
+        ...
+    }
+
+    const gitIgnorePath = path.join(basePath, '.gitignore')
+    if (!fs.exists(gitIgnorePath))
+      fs.writeFile(gitIgnorePath, `\
+/target
+/astro.lock`)
 }
 
 function captureScriptDirs(dest, p) {

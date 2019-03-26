@@ -38,6 +38,7 @@ cmd
             process.exit(1)
         }
 
+        fs.mkdir(path)
         ...
     })
 
