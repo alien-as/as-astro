@@ -17,6 +17,18 @@ function init(basePath, name, kind) {
 
     let src = []
     captureScriptDirs(src, basePath)
+    if (!src.length && kind === 'bin') {
+        const srcPath = path.join(basePath, 'src')
+        fs.mkdir(srcPath)
+        fs.writeFile(path.join(srcPath, 'main.as'), `\
+package {
+    public function main(): void {
+        trace('Hello, Astro!')
+    }
+}\
+`)
+        src.push('src/main.as')
+    }
 
     fs.writeFile(path.join(basePath, 'astro.toml'), `\
 [package]
@@ -38,7 +50,7 @@ function captureScriptDirs(dest, p) {
             captureScriptDirs(dest, f)
         else if (path.parse(f).ext === '.as') {
             if (pushed) continue
-            dest.push(path.join(p, '%2A'))
+            dest.push(path.join(p, '%2A%2A'))
             pushed = true
         }
     }
