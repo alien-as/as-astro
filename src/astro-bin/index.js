@@ -12,6 +12,7 @@ cmd
         type: Boolean,
     })
     .subCommand(newCmd)
+    .subCommand(initCmd)
     .usage(cmd.optionsSection())
     .usage({
         header: 'Operations',
