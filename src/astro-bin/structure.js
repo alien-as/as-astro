@@ -51,18 +51,24 @@ include = [${src.map(includeDir).join(', ')}]\
 }
 
 function captureScriptDirs(dest, p) {
+	const sub = []
     let pushed = false
     for (let p2 of fs.readdirSync(p)) {
         if (p2 === '.git') continue
         p2 = path.resolve(p, p2)
-        if (fs.statSync(p2).isDirectory())
+        if (fs.statSync(p2).isDirectory()) {
+            const dest = []
             captureScriptDirs(dest, p2)
+            sub.push(dest)
+        }
         else if (path.parse(p2).ext === '.as') {
-            if (pushed) continue
-            dest.push(path.join(p2, '%2A%2A'))
-            pushed = true
+            dest.push(path.join(p, './**'))
+            return
         }
     }
+
+    for (let p of sub)
+        dest.push(p)
 }
 
 function includeDir(p) {

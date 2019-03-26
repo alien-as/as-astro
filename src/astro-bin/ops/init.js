@@ -21,15 +21,13 @@ cmd
     .option({
         name: 'bin',
         type: Boolean,
-        group: 'kind',
     })
     .option({
         name: 'lib',
         type: Boolean,
-        group: 'kind',
     })
     .onParse(args => {
-        if (args.help || !args.name)
+        if (args.help)
           cmd.printUsage()
 
         prompts({
@@ -38,8 +36,9 @@ cmd
             message: 'Current directory will be overwritten. Continue? (Y/n)',
         })
             .then(val => {
+                console.log(val)
                 const basePath = process.cwd()
-                if (val.v.toLowerCase() === 'n')
+                if (!val || val.v.toLowerCase() === 'y')
                     return
                 let {name} = args
                 if (!name) name = path.basename(basePath)
