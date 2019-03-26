@@ -1,14 +1,20 @@
-const {spawn} = require('child_process')
+const {spawnSync} = require('child_process')
 const parseGitConfig = require('parse-git-config')
 const fs = require('fs')
     , path = require('path')
 
 function init(basePath, name, kind) {
+    if (!fs.existsSync(path.join(basePath, '.git'))) {
+        // $ git init
+        spawnSync('git', ['init'], { cwd: basePath, })
+    }
+
     const configPath = path.join(basePath, 'astro.toml')
     if (fs.existsSync(configPath))
       return
 
-    const cfg = parseGitConfig.sync()
+    const cfg = parseGitConfig.sync({ cwd: basePath, })
+    console.log(cfg)
     const {user} = cfg
     // Fix ???
 
@@ -48,11 +54,6 @@ authors = ['${author}']
 [${kind}]
 include = [${src.map(includeDir).join(', ')}]\
 `)
-
-    if (!fs.existsSync(path.join(basePath, '.git'))) {
-        // $ git init
-        spawn('git', ['init'], { cwd: basePath, })
-    }
 
     const gitIgnorePath = path.join(basePath, '.gitignore')
     if (!fs.existsSync(gitIgnorePath))
