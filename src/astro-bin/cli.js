@@ -13,11 +13,13 @@ class Command {
                 name: 'help',
                 alias: 'h',
                 type: Boolean,
+                group: 'consult',
             }
         ]
         this._usage = []
         this._subCommands = null
-        this._subCommandFunction = new Map
+        this._onParse = null
+        this._onUnknown = null
     }
 
     subCommand(command) {
@@ -47,15 +49,16 @@ class Command {
         return this
     }
 
-    /// Maps functions to matched sub-commands.
+    onParse(f) {
+        this._onParse = f
+        return this
+    }
+
+    /// Event invoked as `f(name)`
+    /// when a given sub-command doesn't exist.
     ///
-    /// A `'#!'`-key property is treated
-    /// specially. It'll be called as `f(name)`
-    /// if a given sub-command doesn't exist.
-    ///
-    subCommandFunction(o) {
-        for (let k in o)
-            this._subCommandFunction.set(k, o[k])
+    onUnknown(f) {
+        this._onUnknown = f
         return this
     }
 
