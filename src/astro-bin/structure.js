@@ -58,7 +58,7 @@ function captureScriptDirs(dest, p) {
     for (let p2 of fs.readdirSync(p)) {
         if (p2 === '.git') continue
         p2 = path.resolve(p, p2)
-        if (fs.statSync(p2).isDirectory()) {
+        if (fs.lstatSync(p2).isDirectory()) {
             const dest = []
             captureScriptDirs(dest, p2)
             sub.push(dest)
