@@ -70,8 +70,8 @@ function includeDir(p) {
 }
 
 function gitGlobalUser() {
-    const r1 = retrieveGitGlobalKey('user.name', enc)
-        , r2 = retrieveGitGlobalKey('user.email', enc)
+    const r1 = retrieveGitGlobalKey('user.name')
+        , r2 = retrieveGitGlobalKey('user.email')
     if (r1.status) {
         console.error(`Failed to execute Git. \
 If you haven'nt it installed, consult:\n\
