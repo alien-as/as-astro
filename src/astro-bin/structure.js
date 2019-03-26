@@ -70,14 +70,14 @@ function includeDir(p) {
 
 function gitGlobalUser() {
     const r1 = retrieveGitGlobalKey('user.name')
-        , {stdout: email} = retrieveGitGlobalKey('user.email')
+        , {stdout: email} = retrieveGitGlobalKey('user.email').replace(/[\n\r]/g, '')
     if (r1.status) {
         console.error('Failed to execute Git. If you haven\'nt it installed, see:\n\
-  ')
+  https://git-scm.com/downloads')
         process.exit(1)
     }
 
-    const {stdout: name} = r1
+    const {stdout: name} = r1.replace(/[\n\r]/g, '')
 
     if (!name || !email) {
         console.error(`Missing user info.\n
