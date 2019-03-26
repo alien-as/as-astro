@@ -23,23 +23,25 @@ function init(basePath, name, kind) {
 
     const author = gitGlobalUser()
 
-    let src = []
-    captureScriptDirs(src, basePath)
+    let sources = []
+    captureScriptDirs(sources, basePath)
 
     /// Write `main.as` file.
-    if (!src.length && kind === 'bin') {
+    if (!sources.length && kind === 'bin') {
         const srcPath = path.join(basePath, 'src')
         fs.mkdirSync(srcPath)
         const f = fs.readFileSync(path.join(__dirname, 'assets/main.as', { encoding: 'utf-8' }))
         fs.writeFileSync(path.join(srcPath, 'main.as'), f)
-        src.push('src/main.as')
+        sources.push('src/main.as')
     }
+    
+    const rawSources = sources.map(p => includeDir(p.slice(baseDirIndex))).join(', ')
 
     // Write `astro.toml`
-    const cfg = fs.readFileSync(path.join(__dirname, 'assets/astro.toml', { encoding: 'utf-8' }))
+    const cfg = fs.readFileSync(path.join(__dirname,
+        'assets/astro.toml', { encoding: 'utf-8' }))
     fs.writeFileSync(configPath, stringFmt(cfg,
-        name, author, kind,
-        src.map(p => includeDir(p.slice(baseDirIndex))).join(', '))
+        name, author, kind, rawSources))
 
     // Write `.gitignore`
     const gitIgnorePath = path.join(basePath, '.gitignore')
