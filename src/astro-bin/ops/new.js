@@ -41,7 +41,7 @@ cmd
         fs.mkdirSync(basePath)
         const kind = args.lib ? 'lib' : 'bin'
         structure.init(basePath, name, kind)
-        console.log(`Created package ${chalk.green(name)}`)
+        console.log(chalk.green('Created package ') + name)
     })
 
 module.exports = cmd

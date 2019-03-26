@@ -43,7 +43,7 @@ function init(basePath, name, kind) {
 
     // Write `astro.toml`
     const cfg = fs.readFileSync(path.join(__dirname,
-        'assets/astro.toml', { encoding: 'utf-8' }))
+        'assets/astro.toml'), { encoding: 'utf-8' })
     fs.writeFileSync(configPath, stringFmt(cfg,
         name, author, kind, rawSources))
 }
