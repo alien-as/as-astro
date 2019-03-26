@@ -1,21 +1,17 @@
 const {Command} = require('./cli')
+const {
+   newCmd,
+   initCmd,
+} = require('ops')
 
 const cmd = new Command('astro')
+cmd
     .option({
         name: 'version',
         alias: 'V',
         type: Boolean,
     })
     .subCommand(newCmd)
-    .subCommandFunction({
-        'new': (command, args) => {
-            if (args.help)
-                command.printUsage()
-            // ...
-        },
-    })
-
-cmd
     .usage(cmd.optionsSection())
     .usage({
         header: 'Operations',
@@ -62,16 +58,15 @@ cmd
             },
         ],
     })
+    .onParse(args => {
+        if (args.help) {
+            cmd.printUsage()
+        }
+        else if (args.version) {
+            console.log('Astro FOXL9')
+        }
+        else {
+        }
+    })
 
-const args = cmd.parse(process.argv.slice(2))
-
-if (args) {
-    if (args.help) {
-        cmd.printUsage()
-    }
-    else if (args.version) {
-        console.log('Astro FOXL9')
-    }
-    else {
-    }
-}
+cmd.parse(process.argv.slice(2))

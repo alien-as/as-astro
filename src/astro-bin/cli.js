@@ -72,10 +72,12 @@ class Command {
             if (command === 'help'
              && args._unknown.length === 1) {
                 args.help = true
-                return args
+                if (this._onParse)
+                    this._onParse(args)
+                return true
             }
             else if (command && command[0] !== '-') {
-                // Command not eligible after given
+                // Command not allowed after given
                 // options.
                 for (let k in args) {
                     if (k !== '_unknown') {
@@ -83,17 +85,14 @@ class Command {
                         process.exit(1)
                     }
                 }
-                const {_subCommandFunction: o} = this
-                const f = o.get(command)
-                if (f) {
-                    const cmd = this._subCommands.get(command)
-                    const fArgs = args._unknown.slice(1)
-                    const argsF = cmd.parse(fArgs)
-                    if (argsF) f(cmd, argsF)
-                    return null
+                const cmd = this._subCommands.get(command)
+                if (command) {
+                    const args2 = args._unknown.slice(1)
+                    cmd.parse(args2)
+                    return false
                 }
-                else if (o['#!'])
-                    o['#!'](args._unknown.slice(1))
+                else if (this._onUnknown)
+                    this._onUnknown(args._unknown.slice(1))
                 else {
                     console.error(`Unknown operation: ${command}`)
                     process.exit(1)
@@ -103,7 +102,11 @@ class Command {
                 console.error(`Unknown option: ${args._unknown[0]}`)
                 process.exit(1)
             }
-            else return args
+            else {
+                if (this._onParse)
+                    this._onParse(args)
+                return true
+            }
         } catch (e) {
             console.error(e.message)
             process.exit(1)
