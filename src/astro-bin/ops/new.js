@@ -20,26 +20,24 @@ cmd
     .option({
         name: 'bin',
         type: Boolean,
-        group: 'kind',
     })
     .option({
         name: 'lib',
         type: Boolean,
-        group: 'kind',
     })
     .onParse(args => {
         if (args.help || !args.name)
-            this.printUsage()
+            cmd.printUsage()
 
         const {name} = args
-        let basePath = path.join(process.cwd, name)
+        let basePath = path.join(process.cwd(), name)
 
-        if (fs.existsSync(basePath))
+        if (fs.existsSync(basePath)) {
             console.error(`A directory/file \`${name}\` already exists`)
             process.exit(1)
         }
 
-        fs.mkdir(basePath)
+        fs.mkdirSync(basePath)
         const kind = args.lib ? 'lib' : 'bin'
         structure.init(basePath, name, kind)
     })

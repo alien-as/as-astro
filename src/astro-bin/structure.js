@@ -1,14 +1,17 @@
 const {spawn} = require('child_process')
-const gitUserInfo = require('git-user-info')
+const parseGitConfig = require('parse-git-config')
 const fs = require('fs')
     , path = require('path')
 
 function init(basePath, name, kind) {
-	const configPath = path.join(basePath, 'astro.toml')
-    if (fs.exists(configPath))
+    const configPath = path.join(basePath, 'astro.toml')
+    if (fs.existsSync(configPath))
       return
 
-    const user = gitUserInfo()
+    const cfg = parseGitConfig.sync()
+    const {user} = cfg
+    // Fix ???
+
     if (!user || !user.name || !user.email) {
         console.error(`Please enter Git user info.\n
   $ git config --global user.name nickname
@@ -23,8 +26,8 @@ function init(basePath, name, kind) {
 
     if (!src.length && kind === 'bin') {
         const srcPath = path.join(basePath, 'src')
-        fs.mkdir(srcPath)
-        fs.writeFile(path.join(srcPath, 'main.as'), `\
+        fs.mkdirSync(srcPath)
+        fs.writeFileSync(path.join(srcPath, 'main.as'), `\
 package {
     public function main(): void {
         trace('Hello, Astro!')
@@ -34,7 +37,7 @@ package {
         src.push('src/main.as')
     }
 
-    fs.writeFile(configPath, `\
+    fs.writeFileSync(configPath, `\
 [package]
 name = '${name}'
 version = '0.1.0'
@@ -43,17 +46,17 @@ authors = ['${author}']
 [dependencies]
 
 [${kind}]
-include = [${src.map(s => `'${s.replace(/\'/g, '%27'}'`).join(', ')}]\
+include = [${src.map(includeDir).join(', ')}]\
 `)
 
-    if (!fs.exists(path.join(basePath, '.git'))) {
+    if (!fs.existsSync(path.join(basePath, '.git'))) {
         // $ git init
         spawn('git', ['init'], { cwd: basePath, })
     }
 
     const gitIgnorePath = path.join(basePath, '.gitignore')
-    if (!fs.exists(gitIgnorePath))
-        fs.writeFile(gitIgnorePath, `\
+    if (!fs.existsSync(gitIgnorePath))
+        fs.writeFileSync(gitIgnorePath, `\
 /target
 /astro.lock`)
 }
@@ -69,6 +72,10 @@ function captureScriptDirs(dest, p) {
             pushed = true
         }
     }
+}
+
+function includeDir(p) {
+    return `'${p.replace(/'/g, '%27')}'`
 }
 
 module.exports = { init, }

@@ -28,8 +28,8 @@ cmd
     })
     .onParse(args => {
         if (args.help || !args.name)
-          this.printUsage()
-        ...
+          cmd.printUsage()
+        // ...
     })
 
 module.exports = cmd
