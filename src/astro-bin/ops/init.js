@@ -36,13 +36,11 @@ cmd
             message: 'Current directory will be overwritten. Continue? (Y/n)',
         })
             .then(val => {
-                console.log(val)
-                const basePath = process.cwd()
-                if (!val || val.v.toLowerCase() === 'y')
+                if (val.v && val.v !== 'y')
                     return
+                const basePath = process.cwd()
                 let {name} = args
                 if (!name) name = path.basename(basePath)
-
                 const kind = args.lib ? 'lib' : 'bin'
                 structure.init(basePath, name, kind)
             },

@@ -31,6 +31,8 @@ package {
         src.push('src/main.as')
     }
 
+    const baseDirIndex = basePath.length
+
     fs.writeFileSync(configPath, `\
 [package]
 name = '${name}'
@@ -40,7 +42,7 @@ authors = ['${author}']
 [dependencies]
 
 [${kind}]
-include = [${src.map(includeDir).join(', ')}]\
+include = [${src.map(p => includeDir(p.slice(baseDirIndex))).join(', ')}]\
 `)
 
     const gitIgnorePath = path.join(basePath, '.gitignore')
@@ -67,8 +69,10 @@ function captureScriptDirs(dest, p) {
         }
     }
 
-    for (let p of sub)
-        dest.push(p)
+    for (let ls of sub) {
+        for (let p of ls)
+          dest.push(p)
+    }
 }
 
 function includeDir(p) {
