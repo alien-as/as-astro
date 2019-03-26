@@ -2,7 +2,7 @@ const {Command} = require('./cli')
 const {
     newCmd,
     initCmd,
-} = require('ops')
+} = require('./ops')
 
 const cmd = new Command('astro')
 cmd

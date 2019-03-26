@@ -1,4 +1,9 @@
+const {Command} = require('../cli')
+const fs = require('fs')
+    , path = require('path')
+
 const cmd = new Command('new')
+
 cmd
     .usage({
         header: 'Synopsis',
@@ -21,14 +26,19 @@ cmd
         type: Boolean,
         group: 'kind',
     })
-    .option({
-        name: 'other',
-        group: 'kind',
-    })
     .onParse(args => {
         if (args.help || !args.name)
-          this.printUsage()
-        // ...
+            this.printUsage()
+
+        const {name} = args
+        let basePath = path.join(process.cwd, name)
+
+        if (fs.existsSync(basePath))
+            console.error(`A directory/file \`${name}\` already exists`)
+            process.exit(1)
+        }
+
+        ...
     })
 
 module.exports = cmd
