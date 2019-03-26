@@ -28,7 +28,7 @@ cmd
     .onParse(args => {
         if (args.help || !args.name)
           this.printUsage()
-        
+        // ...
     })
 
 module.exports = cmd

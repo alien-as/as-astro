@@ -59,14 +59,10 @@ cmd
         ],
     })
     .onParse(args => {
-        if (args.help) {
+        if (args.help)
             cmd.printUsage()
-        }
-        else if (args.version) {
+        else
             console.log('Astro FOXL9')
-        }
-        else {
-        }
     })
 
 cmd.parse(process.argv.slice(2))
