@@ -14,12 +14,11 @@ function init(basePath, name, kind) {
     }
 
     let author = `${user.name} <${user.email}>`
-    let src = ['']
-    
-    // Find root .as paths
-    ???
 
-    fs.writeFile(basePath.join, `\
+    let src = []
+    captureScriptDirs(src, basePath)
+
+    fs.writeFile(path.join(basePath, 'astro.toml'), `\
 [package]
 name = '${name}'
 version = '0.1.0'
@@ -28,8 +27,21 @@ authors = ['${author}']
 [dependencies]
 
 [${kind}]
-${src}\
+include = [${src.map(s => `'${s.replace(/\'/g, '%27'}'`).join(', ')}]\
 `)
+}
+
+function captureScriptDirs(dest, p) {
+    let pushed = false
+    for (let f of fs.readdirSync(p)) {
+        if (fs.statSync(f).isDirectory())
+            captureScriptDirs(dest, f)
+        else if (path.parse(f).ext === '.as') {
+            if (pushed) continue
+            dest.push(path.join(p, '%2A'))
+            pushed = true
+        }
+    }
 }
 
 module.exports = { init, }
