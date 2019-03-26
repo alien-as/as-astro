@@ -34,7 +34,7 @@ function init(basePath, name, kind) {
     if (!sources.length && kind === 'bin') {
         const srcPath = path.join(basePath, 'src')
         fs.mkdirSync(srcPath)
-        const f = fs.readFileSync(path.join(__dirname, 'assets/main.as', { encoding: 'utf-8' }))
+        const f = fs.readFileSync(path.join(__dirname, 'assets/main.as'), { encoding: 'utf-8' })
         fs.writeFileSync(path.join(srcPath, 'main.as'), f)
         sources.push('src/main.as')
     }

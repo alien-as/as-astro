@@ -4,6 +4,7 @@ const fs = require('fs')
 const chalk = require('chalk')
     , prompts = require('prompts')
 const structure = require('../structure')
+    , clfmt = require('../console_format')
 
 const cmd = new Command('new')
 cmd
@@ -34,15 +35,15 @@ cmd
         let basePath = path.join(process.cwd(), name)
 
         if (fs.existsSync(basePath)) {
-            console.error(`A directory/file \`${name}\` already exists`)
+            console.error(`A directory or file '${name}' already exists`)
             process.exit(1)
         }
 
         fs.mkdirSync(basePath)
         const kind = args.lib ? 'lib' : 'bin'
         structure.init(basePath, name, kind)
-        console.log(chalk.green('Created package ')
-                  + chalk.rgb(0x1A, 0xFF, 0x30).bold(name))
+        console.log(clfmt.fmtSuccess('Created package ')
+                  + clfmt.fmtSuccessTerm(name))
     })
 
 module.exports = cmd
