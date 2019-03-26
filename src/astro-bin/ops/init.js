@@ -4,6 +4,7 @@ const fs = require('fs')
 const chalk = require('chalk')
     , prompts = require('prompts')
 const structure = require('../structure')
+    , clfmt = require('../console_format')
 
 /// `init`
 const cmd = new Command('init')
@@ -44,8 +45,8 @@ cmd
                 if (!name) name = path.basename(basePath)
                 const kind = args.lib ? 'lib' : 'bin'
                 structure.init(basePath, name, kind)
-                console.log(clfmt.fmtSuccess('Initialized package ')
-                          + clfmt.fmtSuccessTerm(name))
+                clfmt.success('Initialized package '
+                    + clfmt.fmtSuccessTerm(name))
             },
             cause => void 0)
     })

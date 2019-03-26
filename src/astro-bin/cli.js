@@ -90,7 +90,8 @@ class Command {
                     process.exit(1)
                 }
             }
-            const cmd = this._subCommands.get(command)
+            const cmd = this._subCommands
+                ? this._subCommands.get(command): null
             if (cmd) {
                 const args2 = args._unknown.slice(1)
                 cmd.parse(args2)

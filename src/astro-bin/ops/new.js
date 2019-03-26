@@ -35,15 +35,15 @@ cmd
         let basePath = path.join(process.cwd(), name)
 
         if (fs.existsSync(basePath)) {
-            console.error(`A directory or file '${name}' already exists`)
+            clfmt.error(`A directory or file '${name}' already exists`)
             process.exit(1)
         }
 
         fs.mkdirSync(basePath)
         const kind = args.lib ? 'lib' : 'bin'
         structure.init(basePath, name, kind)
-        console.log(clfmt.fmtSuccess('Created package ')
-                  + clfmt.fmtSuccessTerm(name))
+        clfmt.success('Created package '
+            + clfmt.fmtSuccessTerm(name))
     })
 
 module.exports = cmd

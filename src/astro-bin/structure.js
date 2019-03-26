@@ -3,6 +3,7 @@ const fs = require('fs')
     , path = require('path')
 const chalk = require('chalk')
 const {stringFmt} = require('./utils')
+    , clfmt = require('./console_format')
 
 /// Initialize package directory.
 ///
@@ -83,7 +84,7 @@ function gitGlobalUser() {
     const r1 = retrieveGitGlobalKey('user.name')
         , r2 = retrieveGitGlobalKey('user.email')
     if (r1.status) {
-        console.error('Failed to execute Git. ' +
+        clfmt.error('Failed to execute Git. ' +
             "If you haven'nt it installed, consult:\n  " +
             chalk.cyan('https://git-scm.com/downloads'))
         process.exit(1)
@@ -93,7 +94,7 @@ function gitGlobalUser() {
         , email = r2.stdout.replace(/[\n\r]/g, '')
 
     if (!name || !email) {
-        console.error(`Missing user info.\n
+        clfmt.error(`Missing user info.\n
   $ git config --global user.name nickname
   $ git config --global user.email email\n`)
         process.exit(1)
