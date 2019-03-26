@@ -2,13 +2,21 @@ const {spawnSync} = require('child_process')
 const fs = require('fs')
     , path = require('path')
 const chalk = require('chalk')
+const {stringFmt} = require('./utils')
 
+/// Initialize package directory.
+///
 function init(basePath, name, kind) {
+	const baseDirIndex = basePath.length
+
+    // `.git` data
     if (!fs.existsSync(path.join(basePath, '.git'))) {
         // $ git init
         spawnSync('git', ['init'], { cwd: basePath, })
     }
 
+    // Remains intact with a
+    // `astro.toml`.
     const configPath = path.join(basePath, 'astro.toml')
     if (fs.existsSync(configPath))
         return
@@ -18,43 +26,34 @@ function init(basePath, name, kind) {
     let src = []
     captureScriptDirs(src, basePath)
 
+    /// Write `main.as` file.
     if (!src.length && kind === 'bin') {
         const srcPath = path.join(basePath, 'src')
         fs.mkdirSync(srcPath)
-        fs.writeFileSync(path.join(srcPath, 'main.as'), `\
-package {
-    public function main(): void {
-        trace('Hello, Astro!')
-    }
-}\
-`)
+        const f = fs.readFileSync(path.join(__dirname, 'assets/main.as', { encoding: 'utf-8' }))
+        fs.writeFileSync(path.join(srcPath, 'main.as'), f)
         src.push('src/main.as')
     }
 
-    const baseDirIndex = basePath.length
+    // Write `astro.toml`
+    const cfg = fs.readFileSync(path.join(__dirname, 'assets/astro.toml', { encoding: 'utf-8' }))
+    fs.writeFileSync(configPath, stringFmt(cfg,
+        name, author, kind,
+        src.map(p => includeDir(p.slice(baseDirIndex))).join(', '))
 
-    fs.writeFileSync(configPath, `\
-[package]
-name = '${name}'
-version = '0.1.0'
-authors = ['${author}']
-
-[dependencies]
-
-[${kind}]
-include = [${src.map(p => includeDir(p.slice(baseDirIndex))).join(', ')}]\
-`)
-
+    // Write `.gitignore`
     const gitIgnorePath = path.join(basePath, '.gitignore')
     if (!fs.existsSync(gitIgnorePath))
-        fs.writeFileSync(gitIgnorePath, `\
-/target
-/astro.lock`)
+        fs.writeFileSync(gitIgnorePath, `/target\n/astro.lock`)
 }
 
+// Looks for directories containing
+// .as with `**` globbing.
+//
 function captureScriptDirs(dest, p) {
 	const sub = []
     let pushed = false
+
     for (let p2 of fs.readdirSync(p)) {
         if (p2 === '.git') continue
         p2 = path.resolve(p, p2)
@@ -71,7 +70,7 @@ function captureScriptDirs(dest, p) {
 
     for (let ls of sub) {
         for (let p of ls)
-          dest.push(p)
+            dest.push(p)
     }
 }
 
@@ -83,9 +82,9 @@ function gitGlobalUser() {
     const r1 = retrieveGitGlobalKey('user.name')
         , r2 = retrieveGitGlobalKey('user.email')
     if (r1.status) {
-        console.error(`Failed to execute Git. \
-If you haven'nt it installed, consult:\n\
- ${chalk.cyan('https://git-scm.com/downloads')}`)
+        console.error('Failed to execute Git. ' +
+            "If you haven'nt it installed, consult:\n  " +
+            chalk.cyan('https://git-scm.com/downloads'))
         process.exit(1)
     }
 
@@ -107,4 +106,6 @@ function retrieveGitGlobalKey(k) {
         { encoding: 'utf-8' })
 }
 
-module.exports = { init, }
+module.exports = {
+    init,
+}

@@ -5,6 +5,7 @@ const {
     initCmd,
 } = require('./ops')
 
+/// `$ astro`
 const cmd = new Command('astro')
 cmd
     .option({

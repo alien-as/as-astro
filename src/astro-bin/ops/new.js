@@ -1,10 +1,11 @@
 const {Command} = require('../cli')
 const fs = require('fs')
     , path = require('path')
+const chalk = require('chalk')
+    , prompts = require('prompts')
 const structure = require('../structure')
 
 const cmd = new Command('new')
-
 cmd
     .usage({
         header: 'Synopsis',
@@ -40,6 +41,7 @@ cmd
         fs.mkdirSync(basePath)
         const kind = args.lib ? 'lib' : 'bin'
         structure.init(basePath, name, kind)
+        console.log(`Created package \`{chalk.green(name)}\``)
     })
 
 module.exports = cmd
