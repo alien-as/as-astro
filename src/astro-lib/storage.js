@@ -34,9 +34,14 @@ let astroStorage = {
         if (!this._defaultCompiler) {
             const item = localStorage.getItem('default_bc')
             if (!item) return null
+
             const {name, version: verRaw} = JSON.parse(item)
             const ver = semver.validRange(verRaw)
+
+            if (!ver) return null
+
             const compilers = this.compilers()
+
             for (let bc of compilers) {
                 if (bc.name === name
                  && semver.satisfies(bc.version, ver))
