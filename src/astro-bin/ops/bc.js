@@ -1,8 +1,9 @@
-const {Command} = require('../cli')
+const {Command} = require('@astro-bin/cli')
+    , structure = require('@astro-bin/structure')
+    , clfmt = require('@astro-bin/console_format')
 const fs = require('fs')
     , path = require('path')
 const prompts = require('prompts')
-const structure = require('../structure')
 
 /// `bc`
 const cmd = new Command('bc')

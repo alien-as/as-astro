@@ -1,8 +1,11 @@
-const {Command} = require('./cli')
+require('module-alias/register')
+
+const {Command} = require('@astro-bin/cli')
+    , structure = require('@astro-bin/structure')
+    , clfmt = require('@astro-bin/console_format')
 const {
     bcCmd,
-    newCmd,
-    initCmd,
+    newCmd, initCmd,
 } = require('./ops')
 
 /// `$ astro`

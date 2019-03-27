@@ -20,10 +20,15 @@
   },
   "homepage": "https://github.com/alien-as/astro#readme",
   "dependencies": {
+    "module-alias": "^2.2.0",
     "chalk": "^2.4.2",
     "command-line-args": "^5.1.0",
     "command-line-usage": "^5.0.5",
     "node-localstorage": "^1.3.1",
     "prompts": "^2.0.4"
+  },
+  "_moduleAliases": {
+    "@astro-bin": "src/astro-bin",
+    "@astro-lib": "src/astro-lib"
   }
 }

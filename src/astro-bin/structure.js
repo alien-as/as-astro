@@ -2,8 +2,8 @@ const {spawnSync} = require('child_process')
 const fs = require('fs')
     , path = require('path')
 const chalk = require('chalk')
-const {stringFmt} = require('./utils')
-    , clfmt = require('./console_format')
+const {stringFmt} = require('@astro-bin/utils')
+    , clfmt = require('@astro-bin/console_format')
 
 /// Initialize package directory.
 ///
