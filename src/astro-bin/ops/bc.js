@@ -25,8 +25,8 @@ $ astro bc update {gray # Updates installed compilers}}`,
     })
     .option({
         name: 'name',
-    })/*
-    .subCommand(showCmd)
+    })
+    .subCommand(showCmd)/*
     .subCommand(linkCmd)
     .subCommand(installCmd)
     .subCommand(uninstallCmd)
@@ -35,24 +35,19 @@ $ astro bc update {gray # Updates installed compilers}}`,
     .onParse(args => cmd.printUsage())
 
 module.exports = cmd
-/*
-/// `bc XXX` subcommand
 
-const xxxCmd = new Command('XXX')
-xxxCmd
-    .usage({
-        header: 'Does?',
-        content: `{italic \
-$ astro bc xxx
-$ astro bc xxx
-$ astro bc xxx}`,
-    })
-    .usage(xxxCmd.optionsSection())
+/// `bc show` subcommand
+
+const showCmd = new Command('show')
+showCmd
+    .usage(showCmd.optionsSection())
     .onParse(args => {
         if (args.help)
-            xxxCmd.printUsage()
+            showCmd.printUsage()
+        // ...
     })
 
+/*
 /// `bc XXX` subcommand
 
 const xxxCmd = new Command('XXX')
