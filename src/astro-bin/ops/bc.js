@@ -15,6 +15,7 @@ let showCmd = null
 /// `bc show` subcommand
 
 showCmd = new Command('show')
+showCmd
     .usage(showCmd.optionsSection())
     .onParse(args => {
         if (args.help)
