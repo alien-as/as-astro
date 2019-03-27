@@ -28,6 +28,12 @@ class Command {
         return this
     }
 
+    subCommands(...commands) {
+        for (let cmd of commands)
+            this.subCommand(cmd)
+        return this
+    }
+
     /// <chainable/>
     ///
     usage(section) {
