@@ -23,6 +23,7 @@ showCli
         if (args.help)
             showCli.printUsage()
         const defaultBc = astroStorage.defaultCompiler()
+        console.log(defaultBc)
         for (let bc of astroStorage.compilers())
             console.log(chalk `{cyan -} ${bc.name} {gray (${bc.version})}`
                 + ((bc === defaultBc) ? chalk ` {cyan \xAB;default\xBB;}` : ''))
