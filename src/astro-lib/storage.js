@@ -37,9 +37,7 @@ let astroStorage = {
 
             const {name, version: verRaw} = JSON.parse(item)
             const ver = semver.validRange(verRaw)
-
             if (!ver) return null
-
             const compilers = this.compilers()
 
             for (let bc of compilers) {
