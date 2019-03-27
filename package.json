@@ -21,6 +21,7 @@
   "homepage": "https://github.com/alien-as/astro#readme",
   "dependencies": {
     "module-alias": "^2.2.0",
+    "semver": "^6.0.0",
     "chalk": "^2.4.2",
     "command-line-args": "^5.1.0",
     "command-line-usage": "^5.0.5",
