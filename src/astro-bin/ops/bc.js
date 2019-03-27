@@ -35,7 +35,7 @@ $ astro bc update {gray # Updates installed compilers}}`,
     .onParse(args => cmd.printUsage())
 
 module.exports = cmd
-
+/*
 /// `bc XXX` subcommand
 
 const xxxCmd = new Command('XXX')
@@ -222,3 +222,4 @@ $ astro bc xxx}`,
         if (args.help)
             xxxCmd.printUsage()
     })
+*/
