@@ -37,11 +37,11 @@ function init(basePath, name, kind) {
         fs.mkdirSync(srcPath)
         const srcFile = kind === 'bin'
             ? 'main.as' : 'lib.as'
-        const f = fs.readFileSync(path.join(__dirname, `assets/${srcFile}`),
+        let f = fs.readFileSync(path.join(__dirname, `assets/${srcFile}`),
             { encoding: 'utf-8' })
 
         // Define at package name
-        if (kind === 'lib' && name[0] > '9') {
+        if (kind === 'lib' && name[0] > '9')
             f = stringFmt(f, name.replace(/\-/g, '_') + ' ')
         else
             f = stringFmt(f, '')

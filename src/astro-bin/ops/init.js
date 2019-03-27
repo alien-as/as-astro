@@ -46,7 +46,7 @@ cmd
 
                 let {name} = args
                 if (!name) name = path.basename(basePath)
-                if (validPackageName(name)) {
+                if (!validPackageName(name)) {
                     clfmt.error('Illegal package name')
                     process.exit(1)
                 }

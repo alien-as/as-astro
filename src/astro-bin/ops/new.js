@@ -33,7 +33,7 @@ cmd
             cmd.printUsage()
 
         const {name} = args
-        if (validPackageName(name)) {
+        if (!validPackageName(name)) {
             clfmt.error('Illegal package name')
             process.exit(1)
         }
