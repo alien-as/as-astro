@@ -13,6 +13,7 @@ let showCmd = null
   , updateCmd = null
 
 /// `bc` subcommand
+
 const cmd = new Command('bc')
 cmd
     .usage({
@@ -46,4 +47,178 @@ $ astro bc xxx
 $ astro bc xxx
 $ astro bc xxx}`,
     })
-    .onParse(args => cmd.printUsage())
+    .usage(xxxCmd.optionsSection())
+    .onParse(args => {
+        if (args.help)
+            xxxCmd.printUsage()
+    })
+
+/// `bc XXX` subcommand
+
+const xxxCmd = new Command('XXX')
+xxxCmd
+    .usage({
+        header: 'Does?',
+        content: `{italic \
+$ astro bc xxx
+$ astro bc xxx
+$ astro bc xxx}`,
+    })
+    .usage(xxxCmd.optionsSection())
+    .onParse(args => {
+        if (args.help)
+            xxxCmd.printUsage()
+    })
+
+/// `bc XXX` subcommand
+
+const xxxCmd = new Command('XXX')
+xxxCmd
+    .usage({
+        header: 'Does?',
+        content: `{italic \
+$ astro bc xxx
+$ astro bc xxx
+$ astro bc xxx}`,
+    })
+    .usage(xxxCmd.optionsSection())
+    .onParse(args => {
+        if (args.help)
+            xxxCmd.printUsage()
+    })
+
+/// `bc XXX` subcommand
+
+const xxxCmd = new Command('XXX')
+xxxCmd
+    .usage({
+        header: 'Does?',
+        content: `{italic \
+$ astro bc xxx
+$ astro bc xxx
+$ astro bc xxx}`,
+    })
+    .usage(xxxCmd.optionsSection())
+    .onParse(args => {
+        if (args.help)
+            xxxCmd.printUsage()
+    })
+
+/// `bc XXX` subcommand
+
+const xxxCmd = new Command('XXX')
+xxxCmd
+    .usage({
+        header: 'Does?',
+        content: `{italic \
+$ astro bc xxx
+$ astro bc xxx
+$ astro bc xxx}`,
+    })
+    .usage(xxxCmd.optionsSection())
+    .onParse(args => {
+        if (args.help)
+            xxxCmd.printUsage()
+    })
+
+/// `bc XXX` subcommand
+
+const xxxCmd = new Command('XXX')
+xxxCmd
+    .usage({
+        header: 'Does?',
+        content: `{italic \
+$ astro bc xxx
+$ astro bc xxx
+$ astro bc xxx}`,
+    })
+    .usage(xxxCmd.optionsSection())
+    .onParse(args => {
+        if (args.help)
+            xxxCmd.printUsage()
+    })
+
+/// `bc XXX` subcommand
+
+const xxxCmd = new Command('XXX')
+xxxCmd
+    .usage({
+        header: 'Does?',
+        content: `{italic \
+$ astro bc xxx
+$ astro bc xxx
+$ astro bc xxx}`,
+    })
+    .usage(xxxCmd.optionsSection())
+    .onParse(args => {
+        if (args.help)
+            xxxCmd.printUsage()
+    })
+
+/// `bc XXX` subcommand
+
+const xxxCmd = new Command('XXX')
+xxxCmd
+    .usage({
+        header: 'Does?',
+        content: `{italic \
+$ astro bc xxx
+$ astro bc xxx
+$ astro bc xxx}`,
+    })
+    .usage(xxxCmd.optionsSection())
+    .onParse(args => {
+        if (args.help)
+            xxxCmd.printUsage()
+    })
+
+/// `bc XXX` subcommand
+
+const xxxCmd = new Command('XXX')
+xxxCmd
+    .usage({
+        header: 'Does?',
+        content: `{italic \
+$ astro bc xxx
+$ astro bc xxx
+$ astro bc xxx}`,
+    })
+    .usage(xxxCmd.optionsSection())
+    .onParse(args => {
+        if (args.help)
+            xxxCmd.printUsage()
+    })
+
+/// `bc XXX` subcommand
+
+const xxxCmd = new Command('XXX')
+xxxCmd
+    .usage({
+        header: 'Does?',
+        content: `{italic \
+$ astro bc xxx
+$ astro bc xxx
+$ astro bc xxx}`,
+    })
+    .usage(xxxCmd.optionsSection())
+    .onParse(args => {
+        if (args.help)
+            xxxCmd.printUsage()
+    })
+
+/// `bc XXX` subcommand
+
+const xxxCmd = new Command('XXX')
+xxxCmd
+    .usage({
+        header: 'Does?',
+        content: `{italic \
+$ astro bc xxx
+$ astro bc xxx
+$ astro bc xxx}`,
+    })
+    .usage(xxxCmd.optionsSection())
+    .onParse(args => {
+        if (args.help)
+            xxxCmd.printUsage()
+    })

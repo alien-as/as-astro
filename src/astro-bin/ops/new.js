@@ -8,6 +8,7 @@ const chalk = require('chalk')
     , prompts = require('prompts')
 
 /// `new` subcommand
+
 const cmd = new Command('new')
 cmd
     .usage({
