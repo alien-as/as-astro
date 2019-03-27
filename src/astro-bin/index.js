@@ -71,7 +71,7 @@ cmd
             {
                 name: '',
                 summary: ''
-            },*/
+            }, */
         ],
     })
     .onParse(args => {

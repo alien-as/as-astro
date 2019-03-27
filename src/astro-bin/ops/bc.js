@@ -25,8 +25,8 @@ $ astro bc update {gray # Updates installed compilers}}`,
     })
     .option({
         name: 'name',
-    })
-    .subCommand(showCmd)/*
+    })/*
+    .subCommand(showCmd)
     .subCommand(linkCmd)
     .subCommand(installCmd)
     .subCommand(uninstallCmd)
