@@ -16,28 +16,34 @@ let showCmd = null
 const cmd = new Command('bc')
 cmd
     .usage({
-        header: 'Manage compilers',
-        content: `Common commands: {italic \
-$ astro bc show
-$ astro bc install adobe-air
-$ astro bc update}`,
+        header: 'Examples',
+        content: `{italic \
+$ astro bc show {gray # Shows installed compilers}
+$ astro bc install adobe-air {gray # Installs AIR SDK}
+$ astro bc update {gray # Updates installed compilers}}`,
     })
     .option({
         name: 'name',
-    })
-    .option({
-        name: 'bin',
-        type: Boolean,
-    })
-    .option({
-        name: 'lib',
-        type: Boolean,
-    })
-    .subCommand()
-    .onParse(args => {
-        if (args.help)
-            cmd.printUsage()
-        ...
-    })
+    })/*
+    .subCommand(showCmd)
+    .subCommand(linkCmd)
+    .subCommand(installCmd)
+    .subCommand(uninstallCmd)
+    .subCommand(sealCmd)
+    .subCommand(updateCmd)*/
+    .onParse(args => cmd.printUsage())
 
 module.exports = cmd
+
+/// `bc XXX` subcommand
+
+const xxxCmd = new Command('XXX')
+xxxCmd
+    .usage({
+        header: 'Does?',
+        content: `{italic \
+$ astro bc xxx
+$ astro bc xxx
+$ astro bc xxx}`,
+    })
+    .onParse(args => cmd.printUsage())

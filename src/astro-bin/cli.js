@@ -54,7 +54,7 @@ class Command {
     }
 
     /// Event invoked as `f(name)`
-    /// when a given sub-command doesn't exist.
+    /// when a given option or sub-command doesn't exist.
     ///
     onUnknown(f) {
         this._onUnknown = f
@@ -72,41 +72,45 @@ class Command {
             process.exit(1)
         }
 
-        const [command] = args._unknown ? args._unknown : [ '' ]
+        const [arg] = args._unknown ? args._unknown : [ '' ]
 
-        if (command === 'help'
+        if (arg === 'help'
          && args._unknown.length === 1) {
             args.help = true
             if (this._onParse)
                 this._onParse(args)
             return true
         }
-        else if (command && command[0] !== '-') {
+        else if (arg && arg[0] !== '-') {
             // Command not allowed after given
             // options.
             for (let k in args) {
                 if (k !== '_unknown') {
-                    console.error(`Unknown option: ${args._unknown[0]}`)
+                    console.error(`Unknown option: ${arg}`)
                     process.exit(1)
                 }
             }
             const cmd = this._subCommands
-                ? this._subCommands.get(command): null
+                ? this._subCommands.get(arg): null
             if (cmd) {
                 const args2 = args._unknown.slice(1)
                 cmd.parse(args2)
                 return false
             }
             else if (this._onUnknown)
-                this._onUnknown(args._unknown.slice(1))
+                this._onUnknown(arg, args._unknown)
             else {
-                console.error(`Unknown operation: ${command}`)
+                console.error(`Unknown operation: ${arg}`)
                 process.exit(1)
             }
         }
         else if (args._unknown) {
-            console.error(`Unknown option: ${args._unknown[0]}`)
-            process.exit(1)
+            if (this._onUnknown)
+                this._onUnknown(arg, args._unknown)
+            else {
+                console.error(`Unknown option: ${arg}`)
+                process.exit(1)
+            }
         }
         else {
             if (this._onParse)
