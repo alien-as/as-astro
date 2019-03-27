@@ -28,7 +28,8 @@ $ astro bc update}`,
     })
     .onParse(args => {
         if (args.help)
-          cmd.printUsage()
+            cmd.printUsage()
+        ...
     })
 
 module.exports = cmd
