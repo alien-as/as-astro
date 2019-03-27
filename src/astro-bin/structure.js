@@ -101,7 +101,7 @@ function gitGlobalUser() {
     if (r1.status) {
         clfmt.error('Failed to execute Git. ' +
             "If you haven'nt it installed, consult:\n  " +
-            chalk.cyan('https://git-scm.com/downloads'))
+            chalk `{cyan {underline https://git-scm.com/downloads}}`)
         process.exit(1)
     }
 

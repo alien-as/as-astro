@@ -1,14 +1,10 @@
 class Compiler {
-    static _construct(path, version, local) {
-        this.path = path
+    constructor(name, version, isSealed, isLocal) {
+        this.name = name
+        /// <type SemVer/>
         this.version = version
-        
-        /// Indicates whether the compiler
-        /// is version-sealed.
-        this.sealed = false
-
-        /// Local to online registry?
-        this.local = local
+        this.isSealed = isSealed
+        this.isLocal = isLocal
     }
 }
 

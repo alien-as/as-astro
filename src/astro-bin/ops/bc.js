@@ -1,9 +1,11 @@
 const {Command} = require('@astro-bin/cli')
     , structure = require('@astro-bin/structure')
-    , clfmt = require('@astro-bin/console-format')
+7    , clfmt = require('@astro-bin/console-format')
+const {astroStorage,} = require('@astro-lib/storage')
 const fs = require('fs')
     , path = require('path')
 const prompts = require('prompts')
+    , chalk = require('chalk')
 
 let showCli = null
   , linkCli = null
@@ -20,7 +22,10 @@ showCli
     .onParse(args => {
         if (args.help)
             showCli.printUsage()
-        // ...
+        const defaultBc = astroStorage.defaultCompiler()
+        for (let bc of astroStorage.compilers())
+            console.log(chalk `{cyan -} ${bc.name} {gray (${bc.version})}`
+                + ((bc === defaultBc) ? chalk ` {cyan \xAB;default\xBB;}` : ''))
     })
 
 /*
