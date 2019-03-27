@@ -38,6 +38,8 @@ linkCli
     .onParse(args => {
         if (args.help)
             linkCli.printUsage()
+        clfmt.error(chalk `{red \`link\`} command unavailable`)
+        process.exit(1)
     })
 
 /*
@@ -219,8 +221,8 @@ $ astro bc update {gray # Updates installed compilers}}`,
         ],
     })
     .subCommands(
-        showCli /*
-        linkCli,
+        showCli,
+        linkCli, /*
         installCli,
         uninstallCli,
         sealCli,

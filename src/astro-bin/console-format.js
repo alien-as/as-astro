@@ -3,7 +3,7 @@ const successTermColor = chalk.rgb(0x1A, 0x30, 0xFF)
 
 module.exports = {
     error(msg) {
-        console.error(chalk.red('Error: ') + msg)
+        console.error(chalk `{red Error:} ${msg}`)
     },
 
     success(msg) {
