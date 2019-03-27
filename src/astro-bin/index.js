@@ -43,7 +43,7 @@ cmd
             {
                 name: 'init',
                 summary: 'Initializes package',
-            },/"
+            }, /*
             {
                 name: '',
                 summary: ''
