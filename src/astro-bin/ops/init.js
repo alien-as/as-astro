@@ -7,16 +7,15 @@ const fs = require('fs')
 const chalk = require('chalk')
     , prompts = require('prompts')
 
-/// `init`
+/// `init` subcommand
 const cmd = new Command('init')
 cmd
     .usage({
         header: 'Synopsis',
-        content: `\
-  $ astro init
-  $ astro init --name proj
-  $ astro init --lib\
-`,
+        content: `{italic \
+$ astro init
+$ astro init --name proj
+$ astro init --lib}`,
     })
     .option({
         name: 'name',
@@ -47,7 +46,7 @@ cmd
                 let {name} = args
                 if (!name) name = path.basename(basePath)
                 if (!validPackageName(name)) {
-                    clfmt.error('Illegal package name')
+                    clfmt.error('Illegal package name: ' + name)
                     process.exit(1)
                 }
 
@@ -56,7 +55,7 @@ cmd
                 clfmt.success('Initialized package '
                     + clfmt.fmtSuccessTerm(name))
             },
-            cause => void 0)
+            cause => 0)
     })
 
 module.exports = cmd

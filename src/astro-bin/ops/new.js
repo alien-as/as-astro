@@ -7,14 +7,14 @@ const fs = require('fs')
 const chalk = require('chalk')
     , prompts = require('prompts')
 
+/// `new` subcommand
 const cmd = new Command('new')
 cmd
     .usage({
         header: 'Synopsis',
-        content: `\
-  $ astro new hello-world
-  $ astro new --lib mech\
-`,
+        content: `{italic \
+$ astro new hello-world
+$ astro new --lib mech}`,
     })
     .option({
         name: 'name',
@@ -34,7 +34,7 @@ cmd
 
         const {name} = args
         if (!validPackageName(name)) {
-            clfmt.error('Illegal package name')
+            clfmt.error('Illegal package name: ' + name)
             process.exit(1)
         }
 
