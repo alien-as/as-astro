@@ -1,6 +1,7 @@
 * `$ astro new` Done!
 * `$ astro init` Done!
 * `$ astro bc` Doing...
+  * `$ astro bc link` Unimplemented
   * `$ astro bc default --print`
   * `$ astro bc use <XXX> cmd` — Reuses `default --print` and `default` setter.
 * `$ astro build` Nop
