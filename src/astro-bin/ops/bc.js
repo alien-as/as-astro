@@ -12,30 +12,6 @@ let showCmd = null
   , sealCmd = null
   , updateCmd = null
 
-/// `bc` subcommand
-
-const cmd = new Command('bc')
-cmd
-    .usage({
-        header: 'Examples',
-        content: `{italic \
-$ astro bc show {gray # Shows installed compilers}
-$ astro bc install adobe-air {gray # Installs AIR SDK}
-$ astro bc update {gray # Updates installed compilers}}`,
-    })
-    .option({
-        name: 'name',
-    })/*
-    .subCommand(showCmd)
-    .subCommand(linkCmd)
-    .subCommand(installCmd)
-    .subCommand(uninstallCmd)
-    .subCommand(sealCmd)
-    .subCommand(updateCmd)*/
-    .onParse(args => cmd.printUsage())
-
-module.exports = cmd
-
 /// `bc show` subcommand
 
 showCmd = new Command('show')
@@ -217,3 +193,29 @@ $ astro bc xxx}`,
             xxxCmd.printUsage()
     })
 */
+
+/// `bc` subcommand
+
+const cmd = new Command('bc')
+cmd
+    .usage({
+        header: 'Examples',
+        content: `{italic \
+$ astro bc show {gray # Shows installed compilers}
+$ astro bc install adobe-air {gray # Installs AIR SDK}
+$ astro bc update {gray # Updates installed compilers}}`,
+    })
+    .option({
+        name: 'name',
+    })
+    .subCommands(
+        showCmd /*
+        linkCmd,
+        installCmd,
+        uninstallCmd,
+        sealCmd,
+        updateCmd */
+    )
+    .onParse(args => cmd.printUsage())
+
+module.exports = cmd

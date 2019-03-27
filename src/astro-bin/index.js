@@ -9,6 +9,7 @@ const {
 } = require('./ops')
 
 /// `$ astro`
+
 const cmd = new Command('astro')
 cmd
     .option({
@@ -16,18 +17,11 @@ cmd
         alias: 'V',
         type: Boolean,
     })
-    .subCommand(bcCmd)
-    .subCommand(newCmd)
-    .subCommand(initCmd) /*
-    .subCommand()
-    .subCommand()
-    .subCommand()
-    .subCommand()
-    .subCommand()
-    .subCommand()
-    .subCommand()
-    .subCommand()
-    .subCommand() */
+    .subCommands(
+        bcCmd,
+        newCmd,
+        initCmd
+    )
     .usage(cmd.optionsSection())
     .usage({
         header: 'Operations',
