@@ -1,6 +1,6 @@
 const {Command} = require('@astro-bin/cli')
     , structure = require('@astro-bin/structure')
-7    , clfmt = require('@astro-bin/console-format')
+    , clfmt = require('@astro-bin/console-format')
 const {astroStorage,} = require('@astro-lib/storage')
 const fs = require('fs')
     , path = require('path')
@@ -13,6 +13,7 @@ let showCli = null
   , uninstallCli = null
   , sealCli = null
   , updateCli = null
+  , defaultCli = null
 
 /// `bc show` subcommand
 
@@ -28,24 +29,18 @@ showCli
                 + ((bc === defaultBc) ? chalk ` {cyan \xABdefault\xBB}` : ''))
     })
 
-/*
-/// `bc XXX` subcommand
 
-xxxCli = new Command('XXX')
-xxxCli
-    .usage({
-        header: 'Does?',
-        content: `{italic \
-$ astro bc xxx
-$ astro bc xxx
-$ astro bc xxx}`,
-    })
-    .usage(xxxCli.optionsSection())
+/// `bc link` subcommand
+
+linkCli = new Command('link')
+linkCli
+    .usage(linkCli.optionsSection())
     .onParse(args => {
         if (args.help)
-            xxxCli.printUsage()
+            linkCli.printUsage()
     })
 
+/*
 /// `bc XXX` subcommand
 
 xxxCli = new Command('XXX')
@@ -211,8 +206,17 @@ $ astro bc show {gray # Shows installed compilers}
 $ astro bc install adobe-air {gray # Installs AIR SDK}
 $ astro bc update {gray # Updates installed compilers}}`,
     })
-    .option({
-        name: 'name',
+    .usage({
+        header: 'Operations',
+        content: [
+            { name: 'show', summary: 'Shows installed compilers' },
+            { name: 'link', summary: 'Installs given custom compiler' },
+            { name: 'install', summary: 'Installs given compiler' },
+            { name: 'uninstall', summary: 'Uninstalls compiler' },
+            { name: 'seal', summary: 'Seals compiler version' },
+            { name: 'update', summary: 'Updates compilers' },
+            { name: 'default', summary: 'Set default compiler' },
+        ],
     })
     .subCommands(
         showCli /*
@@ -220,7 +224,8 @@ $ astro bc update {gray # Updates installed compilers}}`,
         installCli,
         uninstallCli,
         sealCli,
-        updateCli */
+        updateCli
+        defaultCli */
     )
     .onParse(args => cmd.printUsage())
 
