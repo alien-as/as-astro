@@ -38,8 +38,7 @@ module.exports = cmd
 
 /// `bc show` subcommand
 
-const showCmd = new Command('show')
-showCmd
+showCmd = new Command('show')
     .usage(showCmd.optionsSection())
     .onParse(args => {
         if (args.help)
