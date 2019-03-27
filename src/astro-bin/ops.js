@@ -1,10 +1,10 @@
 const
-      bcCmd = require('./ops/bc')
-    , newCmd = require('./ops/new')
-    , initCmd = require('./ops/init')
+      bcCli = require('./ops/bc')
+    , newCli = require('./ops/new')
+    , initCli = require('./ops/init')
 
 module.exports = {
-	bcCmd,
-    newCmd,
-    initCmd,
+	bcCli,
+    newCli,
+    initCli,
 }

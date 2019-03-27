@@ -26,7 +26,7 @@ showCmd
 /*
 /// `bc XXX` subcommand
 
-const xxxCmd = new Command('XXX')
+xxxCmd = new Command('XXX')
 xxxCmd
     .usage({
         header: 'Does?',
@@ -43,7 +43,7 @@ $ astro bc xxx}`,
 
 /// `bc XXX` subcommand
 
-const xxxCmd = new Command('XXX')
+xxxCmd = new Command('XXX')
 xxxCmd
     .usage({
         header: 'Does?',
@@ -60,7 +60,7 @@ $ astro bc xxx}`,
 
 /// `bc XXX` subcommand
 
-const xxxCmd = new Command('XXX')
+xxxCmd = new Command('XXX')
 xxxCmd
     .usage({
         header: 'Does?',
@@ -77,7 +77,7 @@ $ astro bc xxx}`,
 
 /// `bc XXX` subcommand
 
-const xxxCmd = new Command('XXX')
+xxxCmd = new Command('XXX')
 xxxCmd
     .usage({
         header: 'Does?',
@@ -94,7 +94,7 @@ $ astro bc xxx}`,
 
 /// `bc XXX` subcommand
 
-const xxxCmd = new Command('XXX')
+xxxCmd = new Command('XXX')
 xxxCmd
     .usage({
         header: 'Does?',
@@ -111,7 +111,7 @@ $ astro bc xxx}`,
 
 /// `bc XXX` subcommand
 
-const xxxCmd = new Command('XXX')
+xxxCmd = new Command('XXX')
 xxxCmd
     .usage({
         header: 'Does?',
@@ -128,7 +128,7 @@ $ astro bc xxx}`,
 
 /// `bc XXX` subcommand
 
-const xxxCmd = new Command('XXX')
+xxxCmd = new Command('XXX')
 xxxCmd
     .usage({
         header: 'Does?',
@@ -145,7 +145,7 @@ $ astro bc xxx}`,
 
 /// `bc XXX` subcommand
 
-const xxxCmd = new Command('XXX')
+xxxCmd = new Command('XXX')
 xxxCmd
     .usage({
         header: 'Does?',
@@ -162,7 +162,7 @@ $ astro bc xxx}`,
 
 /// `bc XXX` subcommand
 
-const xxxCmd = new Command('XXX')
+xxxCmd = new Command('XXX')
 xxxCmd
     .usage({
         header: 'Does?',
@@ -179,7 +179,7 @@ $ astro bc xxx}`,
 
 /// `bc XXX` subcommand
 
-const xxxCmd = new Command('XXX')
+xxxCmd = new Command('XXX')
 xxxCmd
     .usage({
         header: 'Does?',

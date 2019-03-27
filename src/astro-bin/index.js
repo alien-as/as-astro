@@ -3,10 +3,10 @@ require('module-alias/register')
 const {Command} = require('@astro-bin/cli')
     , structure = require('@astro-bin/structure')
     , clfmt = require('@astro-bin/console_format')
-const {
-    bcCmd,
-    newCmd, initCmd,
-} = require('./ops')
+
+// Operations
+const { bcCli, newCli, initCli, } =
+    require('./ops')
 
 /// `$ astro`
 
@@ -18,9 +18,9 @@ cmd
         type: Boolean,
     })
     .subCommands(
-        bcCmd,
-        newCmd,
-        initCmd
+        bcCli,
+        newCli,
+        initCli
     )
     .usage(cmd.optionsSection())
     .usage({
