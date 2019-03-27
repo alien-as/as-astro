@@ -1,33 +1,33 @@
 const {Command} = require('@astro-bin/cli')
     , structure = require('@astro-bin/structure')
-    , clfmt = require('@astro-bin/console_format')
+    , clfmt = require('@astro-bin/console-format')
 const fs = require('fs')
     , path = require('path')
 const prompts = require('prompts')
 
-let showCmd = null
-  , linkCmd = null
-  , installCmd = null
-  , uninstallCmd = null
-  , sealCmd = null
-  , updateCmd = null
+let showCli = null
+  , linkCli = null
+  , installCli = null
+  , uninstallCli = null
+  , sealCli = null
+  , updateCli = null
 
 /// `bc show` subcommand
 
-showCmd = new Command('show')
-showCmd
-    .usage(showCmd.optionsSection())
+showCli = new Command('show')
+showCli
+    .usage(showCli.optionsSection())
     .onParse(args => {
         if (args.help)
-            showCmd.printUsage()
+            showCli.printUsage()
         // ...
     })
 
 /*
 /// `bc XXX` subcommand
 
-xxxCmd = new Command('XXX')
-xxxCmd
+xxxCli = new Command('XXX')
+xxxCli
     .usage({
         header: 'Does?',
         content: `{italic \
@@ -35,16 +35,16 @@ $ astro bc xxx
 $ astro bc xxx
 $ astro bc xxx}`,
     })
-    .usage(xxxCmd.optionsSection())
+    .usage(xxxCli.optionsSection())
     .onParse(args => {
         if (args.help)
-            xxxCmd.printUsage()
+            xxxCli.printUsage()
     })
 
 /// `bc XXX` subcommand
 
-xxxCmd = new Command('XXX')
-xxxCmd
+xxxCli = new Command('XXX')
+xxxCli
     .usage({
         header: 'Does?',
         content: `{italic \
@@ -52,16 +52,16 @@ $ astro bc xxx
 $ astro bc xxx
 $ astro bc xxx}`,
     })
-    .usage(xxxCmd.optionsSection())
+    .usage(xxxCli.optionsSection())
     .onParse(args => {
         if (args.help)
-            xxxCmd.printUsage()
+            xxxCli.printUsage()
     })
 
 /// `bc XXX` subcommand
 
-xxxCmd = new Command('XXX')
-xxxCmd
+xxxCli = new Command('XXX')
+xxxCli
     .usage({
         header: 'Does?',
         content: `{italic \
@@ -69,16 +69,16 @@ $ astro bc xxx
 $ astro bc xxx
 $ astro bc xxx}`,
     })
-    .usage(xxxCmd.optionsSection())
+    .usage(xxxCli.optionsSection())
     .onParse(args => {
         if (args.help)
-            xxxCmd.printUsage()
+            xxxCli.printUsage()
     })
 
 /// `bc XXX` subcommand
 
-xxxCmd = new Command('XXX')
-xxxCmd
+xxxCli = new Command('XXX')
+xxxCli
     .usage({
         header: 'Does?',
         content: `{italic \
@@ -86,16 +86,16 @@ $ astro bc xxx
 $ astro bc xxx
 $ astro bc xxx}`,
     })
-    .usage(xxxCmd.optionsSection())
+    .usage(xxxCli.optionsSection())
     .onParse(args => {
         if (args.help)
-            xxxCmd.printUsage()
+            xxxCli.printUsage()
     })
 
 /// `bc XXX` subcommand
 
-xxxCmd = new Command('XXX')
-xxxCmd
+xxxCli = new Command('XXX')
+xxxCli
     .usage({
         header: 'Does?',
         content: `{italic \
@@ -103,16 +103,16 @@ $ astro bc xxx
 $ astro bc xxx
 $ astro bc xxx}`,
     })
-    .usage(xxxCmd.optionsSection())
+    .usage(xxxCli.optionsSection())
     .onParse(args => {
         if (args.help)
-            xxxCmd.printUsage()
+            xxxCli.printUsage()
     })
 
 /// `bc XXX` subcommand
 
-xxxCmd = new Command('XXX')
-xxxCmd
+xxxCli = new Command('XXX')
+xxxCli
     .usage({
         header: 'Does?',
         content: `{italic \
@@ -120,16 +120,16 @@ $ astro bc xxx
 $ astro bc xxx
 $ astro bc xxx}`,
     })
-    .usage(xxxCmd.optionsSection())
+    .usage(xxxCli.optionsSection())
     .onParse(args => {
         if (args.help)
-            xxxCmd.printUsage()
+            xxxCli.printUsage()
     })
 
 /// `bc XXX` subcommand
 
-xxxCmd = new Command('XXX')
-xxxCmd
+xxxCli = new Command('XXX')
+xxxCli
     .usage({
         header: 'Does?',
         content: `{italic \
@@ -137,16 +137,16 @@ $ astro bc xxx
 $ astro bc xxx
 $ astro bc xxx}`,
     })
-    .usage(xxxCmd.optionsSection())
+    .usage(xxxCli.optionsSection())
     .onParse(args => {
         if (args.help)
-            xxxCmd.printUsage()
+            xxxCli.printUsage()
     })
 
 /// `bc XXX` subcommand
 
-xxxCmd = new Command('XXX')
-xxxCmd
+xxxCli = new Command('XXX')
+xxxCli
     .usage({
         header: 'Does?',
         content: `{italic \
@@ -154,16 +154,16 @@ $ astro bc xxx
 $ astro bc xxx
 $ astro bc xxx}`,
     })
-    .usage(xxxCmd.optionsSection())
+    .usage(xxxCli.optionsSection())
     .onParse(args => {
         if (args.help)
-            xxxCmd.printUsage()
+            xxxCli.printUsage()
     })
 
 /// `bc XXX` subcommand
 
-xxxCmd = new Command('XXX')
-xxxCmd
+xxxCli = new Command('XXX')
+xxxCli
     .usage({
         header: 'Does?',
         content: `{italic \
@@ -171,16 +171,16 @@ $ astro bc xxx
 $ astro bc xxx
 $ astro bc xxx}`,
     })
-    .usage(xxxCmd.optionsSection())
+    .usage(xxxCli.optionsSection())
     .onParse(args => {
         if (args.help)
-            xxxCmd.printUsage()
+            xxxCli.printUsage()
     })
 
 /// `bc XXX` subcommand
 
-xxxCmd = new Command('XXX')
-xxxCmd
+xxxCli = new Command('XXX')
+xxxCli
     .usage({
         header: 'Does?',
         content: `{italic \
@@ -188,10 +188,10 @@ $ astro bc xxx
 $ astro bc xxx
 $ astro bc xxx}`,
     })
-    .usage(xxxCmd.optionsSection())
+    .usage(xxxCli.optionsSection())
     .onParse(args => {
         if (args.help)
-            xxxCmd.printUsage()
+            xxxCli.printUsage()
     })
 */
 
@@ -210,12 +210,12 @@ $ astro bc update {gray # Updates installed compilers}}`,
         name: 'name',
     })
     .subCommands(
-        showCmd /*
-        linkCmd,
-        installCmd,
-        uninstallCmd,
-        sealCmd,
-        updateCmd */
+        showCli /*
+        linkCli,
+        installCli,
+        uninstallCli,
+        sealCli,
+        updateCli */
     )
     .onParse(args => cmd.printUsage())
 

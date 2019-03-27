@@ -1,6 +1,6 @@
 const {Command} = require('@astro-bin/cli')
     , structure = require('@astro-bin/structure')
-    , clfmt = require('@astro-bin/console_format')
+    , clfmt = require('@astro-bin/console-format')
 const {validPackageName} = require('@astro-lib/validation')
 const fs = require('fs')
     , path = require('path')

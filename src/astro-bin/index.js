@@ -2,7 +2,7 @@ require('module-alias/register')
 
 const {Command} = require('@astro-bin/cli')
     , structure = require('@astro-bin/structure')
-    , clfmt = require('@astro-bin/console_format')
+    , clfmt = require('@astro-bin/console-format')
 
 // Operations
 const { bcCli, newCli, initCli, } =

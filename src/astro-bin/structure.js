@@ -3,7 +3,7 @@ const fs = require('fs')
     , path = require('path')
 const chalk = require('chalk')
 const {stringFmt} = require('@astro-bin/utils')
-    , clfmt = require('@astro-bin/console_format')
+    , clfmt = require('@astro-bin/console-format')
 
 /// Initialize package directory.
 ///
