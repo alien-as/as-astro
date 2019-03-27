@@ -87,7 +87,7 @@ function captureScriptDirs(dest, p) {
 }
 
 function includeDir(p) {
-    return `'${p.replace(/'/g, '%27')}'`
+    return `'${p.replace(/'/g, '%27').replace(/\\/g, '/')}'`
 }
 
 function gitGlobalUser() {
