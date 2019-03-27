@@ -31,13 +31,23 @@ function init(basePath, name, kind) {
     let sources = []
     captureScriptDirs(sources, basePath)
 
-    /// Write `main.as` file.
-    if (!sources.length && kind === 'bin') {
+    /// Write `main.as` or `lib.as` file.
+    if (!sources.length) {
         const srcPath = path.join(basePath, 'src')
         fs.mkdirSync(srcPath)
-        const f = fs.readFileSync(path.join(__dirname, 'assets/main.as'), { encoding: 'utf-8' })
-        fs.writeFileSync(path.join(srcPath, 'main.as'), f)
-        sources.push(path.join(srcPath, 'main.as'))
+        const srcFile = kind === 'bin'
+            ? 'main.as' : 'lib.as'
+        const f = fs.readFileSync(path.join(__dirname, `assets/${srcFile}`),
+            { encoding: 'utf-8' })
+
+        // Define at package name
+        if (kind === 'lib' && name[0] > '9') {
+            f = stringFmt(f, name.replace(/\-/g, '_') + ' ')
+        else
+            f = stringFmt(f, '')
+
+        fs.writeFileSync(path.join(srcPath, srcFile), f)
+        sources.push(path.join(srcPath, srcFile))
     }
 
     const rawSources = sources.map(p => includeDir(p.slice(baseDirIndex))).join(', ')

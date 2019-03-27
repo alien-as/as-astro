@@ -1,6 +1,7 @@
 const {Command} = require('@astro-bin/cli')
     , structure = require('@astro-bin/structure')
     , clfmt = require('@astro-bin/console_format')
+const {validPackageName} = require('@astro-lib/validation')
 const fs = require('fs')
     , path = require('path')
 const chalk = require('chalk')
@@ -32,6 +33,11 @@ cmd
             cmd.printUsage()
 
         const {name} = args
+        if (validPackageName(name)) {
+            clfmt.error('Illegal package name')
+            process.exit(1)
+        }
+
         let basePath = path.join(process.cwd(), name)
 
         if (fs.existsSync(basePath)) {

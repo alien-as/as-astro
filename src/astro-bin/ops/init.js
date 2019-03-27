@@ -1,6 +1,7 @@
 const {Command} = require('@astro-bin/cli')
     , structure = require('@astro-bin/structure')
     , clfmt = require('@astro-bin/console_format')
+const {validPackageName} = require('@astro-lib/validation')
 const fs = require('fs')
     , path = require('path')
 const chalk = require('chalk')
@@ -35,14 +36,21 @@ cmd
         prompts({
             type: 'text',
             name: 'v',
-            message: 'Current directory will be overwritten. Continue? (Y/n)',
+            message: 'Current directory will be overwritten. ' +
+                     'Continue? (Y/n)',
         })
             .then(val => {
                 if (val.v && val.v !== 'y')
                     return
                 const basePath = process.cwd()
+
                 let {name} = args
                 if (!name) name = path.basename(basePath)
+                if (validPackageName(name)) {
+                    clfmt.error('Illegal package name')
+                    process.exit(1)
+                }
+
                 const kind = args.lib ? 'lib' : 'bin'
                 structure.init(basePath, name, kind)
                 clfmt.success('Initialized package '
