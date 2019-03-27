@@ -16,8 +16,18 @@ cmd
         alias: 'V',
         type: Boolean,
     })
+    .subCommand(bcCmd)
     .subCommand(newCmd)
-    .subCommand(initCmd)
+    .subCommand(initCmd) /*
+    .subCommand()
+    .subCommand()
+    .subCommand()
+    .subCommand()
+    .subCommand()
+    .subCommand()
+    .subCommand()
+    .subCommand()
+    .subCommand() */
     .usage(cmd.optionsSection())
     .usage({
         header: 'Operations',
