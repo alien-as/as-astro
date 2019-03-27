@@ -5,6 +5,13 @@ const fs = require('fs')
     , path = require('path')
 const prompts = require('prompts')
 
+let showCmd = null
+  , linkCmd = null
+  , installCmd = null
+  , uninstallCmd = null
+  , sealCmd = null
+  , updateCmd = null
+
 /// `bc` subcommand
 const cmd = new Command('bc')
 cmd
@@ -26,6 +33,7 @@ $ astro bc update}`,
         name: 'lib',
         type: Boolean,
     })
+    .subCommand()
     .onParse(args => {
         if (args.help)
             cmd.printUsage()
