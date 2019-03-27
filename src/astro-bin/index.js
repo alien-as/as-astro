@@ -4,6 +4,8 @@ const {Command} = require('@astro-bin/cli')
     , structure = require('@astro-bin/structure')
     , clfmt = require('@astro-bin/console-format')
 
+const chalk = require('chalk')
+
 // Operations
 const { bcCli, newCli, initCli, } =
     require('./ops')
@@ -72,7 +74,7 @@ cmd
         if (args.help)
             cmd.printUsage()
         else
-            console.log('Astro FOXL9')
+            console.log(chalk `Astro {blue 0.1.0}`)
     })
 
 cmd.parse(process.argv.slice(2))
