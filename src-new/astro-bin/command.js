@@ -114,7 +114,10 @@ class Command {
             if (this._onUnknown)
                 this._onUnknown(arg, args._unknown)
             else {
-                console.error(`Unknown option: ${arg}`)
+                if (arg[0] === '-')
+                    console.error(`Unknown option: ${arg}`)
+                else
+                    console.error(`Invalid argument ${arg}`)
                 process.exit(1)
             }
         }
