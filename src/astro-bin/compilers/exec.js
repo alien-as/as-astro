@@ -3,22 +3,21 @@
 //! ```
 //! interface CompilerExec {
 //!     build (pkg: AstroPackage, options: BuildOptions)
-//!     run (pkg: AstroPackage, options: BuildOptions)
-//!     test (pkg: AstroPackage, options: BuildOptions)
-//!     doc (pkg: AstroPackage, options: DocOptions)
+//!     run   (pkg: AstroPackage, options: BuildOptions)
+//!     test  (pkg: AstroPackage, options: BuildOptions)
+//!     doc   (pkg: AstroPackage, options: DocOptions)
 //! }
 //!
 //! class BuildOptions {
-//!     var opt: uint?
+//!     var optimise: uint?
 //!       , target: string?
 //!       , targetDir: string?
 //!       , features: Vector.<string>
 //! }
 //!
-//!
-//!
-//!
-//!
+//! class DocOptions {
+//!     var targetDir: string?
+//! }
 //!
 //!
 //! ```
