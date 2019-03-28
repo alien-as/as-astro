@@ -30,6 +30,7 @@
   },
   "_moduleAliases": {
     "@astro-bin": "src/astro-bin",
-    "@astro-lib": "src/astro-lib"
+    "@astro-lib": "src/astro-lib",
+    "@extension": "src/extension"
   }
 }

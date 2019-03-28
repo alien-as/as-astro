@@ -1,6 +1,6 @@
 const {Command} = require('@astro-bin/cli')
     , structure = require('@astro-bin/structure')
-    , clfmt = require('@astro-bin/console-format')
+    , interact = require('@astro-bin/interact')
 const {astroStorage,} = require('@astro-lib/storage')
 const fs = require('fs')
     , path = require('path')
@@ -38,7 +38,7 @@ linkCli
     .onParse(args => {
         if (args.help)
             linkCli.printUsage()
-        clfmt.error(chalk `{red \`link\`} command unavailable`)
+        interact.error(chalk `{red \`link\`} command unavailable`)
         process.exit(1)
     })
 
@@ -199,8 +199,8 @@ $ astro bc xxx}`,
 
 /// `bc` subcommand
 
-const cmd = new Command('bc')
-cmd
+const cli = new Command('bc')
+cli
     .usage({
         header: 'Examples',
         content: `{italic \
@@ -220,7 +220,7 @@ $ astro bc update {gray # Updates installed compilers}}`,
             { name: 'default', summary: 'Set default compiler' },
         ],
     })
-    .subCommands(
+    .subCommands([
         showCli,
         linkCli, /*
         installCli,
@@ -228,7 +228,7 @@ $ astro bc update {gray # Updates installed compilers}}`,
         sealCli,
         updateCli
         defaultCli */
-    )
-    .onParse(args => cmd.printUsage())
+    ])
+    .onParse(args => cli.printUsage())
 
-module.exports = cmd
+module.exports = cli

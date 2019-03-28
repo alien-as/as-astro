@@ -1,6 +1,6 @@
 const {Command} = require('@astro-bin/command')
     , structure = require('@astro-bin/structure')
-    , interact = require('@astro-bin/interact')
+    , interact  = require('@astro-bin/interact')
 
 const {validPackageName} = require('@astro-lib/validation')
 
@@ -52,8 +52,8 @@ $ astro new --lib mech}`,
         fs.mkdirSync(basePath)
         const kind = args.lib ? 'lib' : 'bin'
         structure.init(basePath, name, kind)
-        interact.success('Created package '
-            + interact.fmtSuccessTerm(name))
+        interact.ok('Created package '
+            + interact.wrapOkTerm(name))
     })
 
 module.exports = cmd

@@ -1,7 +1,7 @@
 require('module-alias/register')
 
-const {Command}   = require('@astro-bin/command')
-    ,  interact   = require('@astro-bin/interact')
+const {Command} = require('@astro-bin/command')
+    ,  interact = require('@astro-bin/interact')
 
 const chalk = require('chalk')
 
