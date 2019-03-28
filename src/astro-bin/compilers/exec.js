@@ -2,9 +2,10 @@
 //!
 //! ```
 //! interface CompilerExec {
-//!     build(): 
-//!     run(): 
-//!     doc(): 
+//!     build (pkg: AstroPackage, options: BuildOptions)
+//!     run (pkg: AstroPackage, options: BuildOptions)
+//!     test (pkg: AstroPackage, options: BuildOptions)
+//!     doc (pkg: AstroPackage, options: DocOptions)
 //! }
 //! ```
 
@@ -24,15 +25,7 @@ const air    = require('./air')
     , redtam = require('./redtam')
 
 module.exports = {
-    execBuild() {
-        ...
-    },
-
-    execRun() { ... },
-
-    execDoc() { ... },
-
-    _execCompiler() {
+    getCompiler() {
         const bc = astroStorage.defaultCompiler()
         if (!bc) {
             clfmt.error('No compiler specified.\n'
@@ -42,7 +35,8 @@ module.exports = {
         if (bc.isLocal) {
             ...
         } else {
-            ...
+            clfmt.error('Custom compilers unimplemented')
+            process.exit(1)
         }
     },
 }
