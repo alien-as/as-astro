@@ -7,6 +7,20 @@
 //!     test (pkg: AstroPackage, options: BuildOptions)
 //!     doc (pkg: AstroPackage, options: DocOptions)
 //! }
+//!
+//! class BuildOptions {
+//!     var opt: uint?
+//!       , target: string?
+//!       , targetDir: string?
+//!       , features: Vector.<string>
+//! }
+//!
+//!
+//!
+//!
+//!
+//!
+//!
 //! ```
 
 const {Command} = require('@astro-bin/cli')
