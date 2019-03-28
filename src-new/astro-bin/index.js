@@ -1,13 +1,13 @@
 require('module-alias/register')
 
-const {Command} = require('./command')
-    , interact = require('./interact')
+const {Command}   = require('@astro-bin/command')
+    ,  interact   = require('@astro-bin/interact')
 
 const chalk = require('chalk')
 
 // Operations
 //
-const [ bcCli, newCli, initCli, ] = require('./$merged')
+const [ bcCli, newCli, initCli, ] = require('./commands/$merged')
 
 /// `$ astro`
 
@@ -18,11 +18,11 @@ cli
         alias: 'V',
         type: Boolean,
     })
-    .subCommands(
+    .subCommands([
         bcCli,
         newCli,
-        initCli
-    )
+        initCli,
+    ])
     .usage(cli.optionsSection())
     .usage({
         header: 'Operations',

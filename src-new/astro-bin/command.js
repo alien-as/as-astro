@@ -2,8 +2,8 @@
 //! `command-line-args` and
 //! `command-line-usage`.
 
-const commandLineArgs = require('command-line-args')
-    , commandLineUsage = require('command-line-usage')
+const commandLineArgs    = require('command-line-args')
+    , commandLineUsage   = require('command-line-usage')
 
 class Command {
     constructor(name) {

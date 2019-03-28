@@ -1,4 +1,4 @@
-//! Interaction with the user.
+//! Interaction from to the user.
 
 const chalk = require('chalk')
 
@@ -8,6 +8,4 @@ module.exports = {
     error(message) {
         console.error(chalk.red('Error: ') + message.toString())
     },
-
-    // ## 
 }
