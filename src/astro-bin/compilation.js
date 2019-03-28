@@ -1,4 +1,4 @@
-/// Compilation processes.
+/// Compiler...
 ///
 /// * Red Tamarin: `redbean`
 ///              + `asc`
@@ -8,3 +8,8 @@
 ///
 /// * Custom: unimplemented
 
+
+
+module.exports = {
+    ...
+}
