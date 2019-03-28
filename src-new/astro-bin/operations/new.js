@@ -1,4 +1,4 @@
-const {Command} = require('@astro-bin/cli')
+const {Command} = require('@astro-bin/command')
     , structure = require('@astro-bin/structure')
     , interact = require('@astro-bin/interact')
 
