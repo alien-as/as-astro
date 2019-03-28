@@ -38,7 +38,7 @@ const air    = require('./air')
     , redtam = require('./redtam')
 
 module.exports = {
-    getCompiler() {
+    compilerExec() {
         const bc = astroStorage.defaultCompiler()
         if (!bc) {
             clfmt.error('No compiler specified.\n'
