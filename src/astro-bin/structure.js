@@ -1,9 +1,13 @@
+//! Package structure functions
+
 const {spawnSync} = require('child_process')
-const fs = require('fs')
-    , path = require('path')
+    , fs          = require('fs')
+    , path        = require('path')
+
 const chalk = require('chalk')
-const {stringFmt} = require('@astro-bin/utils')
-    , clfmt = require('@astro-bin/console-format')
+
+const {stringFormat} = require('@extension/string')
+const display       = require('@astro-bin/display')
 
 /// Initialize package directory.
 ///
@@ -42,9 +46,9 @@ function init(basePath, name, kind) {
 
         // Define at package name
         if (kind === 'lib' && name[0] > '9')
-            f = stringFmt(f, name.replace(/\-/g, '_') + ' ')
+            f = stringFormat(f, name.replace(/\-/g, '_') + ' ')
         else
-            f = stringFmt(f, '')
+            f = stringFormat(f, '')
 
         fs.writeFileSync(path.join(srcPath, srcFile), f)
         sources.push(path.join(srcPath, srcFile))
@@ -55,7 +59,7 @@ function init(basePath, name, kind) {
     // Write `astro.toml`
     const cfg = fs.readFileSync(path.join(__dirname,
         'assets/astro.toml'), { encoding: 'utf-8' })
-    fs.writeFileSync(configPath, stringFmt(cfg,
+    fs.writeFileSync(configPath, stringFormat(cfg,
         name, author, kind, rawSources))
 }
 

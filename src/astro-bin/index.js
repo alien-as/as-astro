@@ -1,31 +1,28 @@
 require('module-alias/register')
 
-const {Command} = require('@astro-bin/cli')
-    , structure = require('@astro-bin/structure')
-    , clfmt = require('@astro-bin/console-format')
+const {Command} = require('@astro-bin/command')
+    ,  display = require('@astro-bin/display')
 
 const chalk = require('chalk')
 
-// Operations
+// #### Operations
 //
-const { bcCli, newCli, initCli, }
-    = require('./ops')
+const [ bcCli, newCli, initCli, ] = require('./operations/$merged')
 
-/// `$ astro`
+/// ## `$ astro`
 
-const cmd = new Command('astro')
-cmd
+const cli = new Command('astro')
+cli
     .option({
         name: 'version',
         alias: 'V',
         type: Boolean,
     })
-    .subCommands(
+    .subCommands([
         bcCli,
-        newCli,
-        initCli
-    )
-    .usage(cmd.optionsSection())
+        newCli, initCli,
+    ])
+    .usage(cli.optionsSection())
     .usage({
         header: 'Operations',
         content: [
@@ -43,9 +40,9 @@ cmd
     })
     .onParse(args => {
         if (args.help)
-            cmd.printUsage()
+            cli.printUsage()
         else
             console.log(chalk `Astro {blue 0.1.0}`)
     })
 
-cmd.parse(process.argv.slice(2))
+cli.parse(process.argv.slice(2))

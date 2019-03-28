@@ -1,6 +1,6 @@
-const {Command} = require('@astro-bin/cli')
+const {Command} = require('@astro-bin/command')
     , structure = require('@astro-bin/structure')
-    , interact = require('@astro-bin/interact')
+    , display = require('@astro-bin/display')
 const {astroStorage,} = require('@astro-lib/storage')
 const fs = require('fs')
     , path = require('path')
@@ -38,7 +38,7 @@ linkCli
     .onParse(args => {
         if (args.help)
             linkCli.printUsage()
-        interact.error(chalk `{red \`link\`} command unavailable`)
+        display.error(chalk `{red \`link\`} command unavailable`)
         process.exit(1)
     })
 

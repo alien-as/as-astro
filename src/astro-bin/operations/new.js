@@ -1,6 +1,6 @@
 const {Command} = require('@astro-bin/command')
     , structure = require('@astro-bin/structure')
-    , interact  = require('@astro-bin/interact')
+    , display  = require('@astro-bin/display')
 
 const {validPackageName} = require('@astro-lib/validation')
 
@@ -38,22 +38,22 @@ $ astro new --lib mech}`,
 
         const {name} = args
         if (!validPackageName(name)) {
-            interact.error('Illegal package name: ' + name)
+            display.error('Illegal package name: ' + name)
             process.exit(1)
         }
 
         let basePath = path.join(process.cwd(), name)
 
         if (fs.existsSync(basePath)) {
-            interact.error(`A directory or file '${name}' already exists`)
+            display.error(`A directory or file '${name}' already exists`)
             process.exit(1)
         }
 
         fs.mkdirSync(basePath)
         const kind = args.lib ? 'lib' : 'bin'
         structure.init(basePath, name, kind)
-        interact.ok('Created package '
-            + interact.wrapOkTerm(name))
+        display.ok('Created package '
+            + display.wrapOkTerm(name))
     })
 
 module.exports = cmd

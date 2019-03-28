@@ -1,6 +1,6 @@
-const {Command} = require('@astro-bin/cli')
+const {Command} = require('@astro-bin/command')
     , structure = require('@astro-bin/structure')
-    , interact = require('@astro-bin/interact')
+    , display = require('@astro-bin/display')
 const {validPackageName} = require('@astro-lib/validation')
 const fs = require('fs')
     , path = require('path')
@@ -47,14 +47,14 @@ $ astro init --lib}`,
                 let {name} = args
                 if (!name) name = path.basename(basePath)
                 if (!validPackageName(name)) {
-                    interact.error('Illegal package name: ' + name)
+                    display.error('Illegal package name: ' + name)
                     process.exit(1)
                 }
 
                 const kind = args.lib ? 'lib' : 'bin'
                 structure.init(basePath, name, kind)
-                interact.ok('Initialized package '
-                    + interact.wrapOkTerm(name))
+                display.ok('Initialized package '
+                    + display.wrapOkTerm(name))
             },
             cause => 0)
     })
