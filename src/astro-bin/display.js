@@ -1,13 +1,13 @@
 //! Console displaying.
 
 const chalk = require('chalk')
-const okTermColor = chalk.rgb(0x1A, 0x30, 0xFF)
+const oktColor = chalk.rgb(0x1A, 0x30, 0xFF)
 
 module.exports = {
     // ## Formatting
 
     error(message) {
-        console.error(chalk.red('Error: ') + message.toString())
+        console.error(chalk `{magenta Error:} {bgBlack {white ${ message.toString() }}}`)
     },
 
     ok(message) {
@@ -15,6 +15,6 @@ module.exports = {
     },
 
     wrapOkTerm(term) {
-        return okTermColor.bold(term)
+        return oktColor.bold(term)
     },
 }

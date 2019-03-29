@@ -15,6 +15,10 @@ const prompts     = require('prompts')
     , semver      = require('semver')
     , progress    = require('request-progress')
     , cliProgress = require('cli-progress')
+    , extract     = require('extract-zip')
+
+const dataDir = path.join(__dirname, '../../../data')
+const compilersDir = path.join(dataDir, 'compilers')
 
 let showCli = null
   , linkCli = null
@@ -108,52 +112,66 @@ function installAIR(range, ar) {
         .on('error', failedOnVersionFetch)
 
     function onPageLoad(data) {
-        const [_, ver] = data.match(/Compiler \(version\&nbsp\;([^ ]+)/)
+        const [_, ver] = semver.coerce(data.match(/Compiler \(version\&nbsp\;([^ ]+)/))
         if (!ver) failedOnVersionFetch()
 
         // @todo Previous versions aren't downloadable.
-        if (!semver.satifies(ver = semver.coerce(ver), range)) {
+        if (!semver.satisfies(ver, range)) {
             display.error('Cannot download given version.')
             process.exit(1)
         }
 
-        // Import fs and create
-        // internal directory etc...
-        ...
+        const compilerPath = path.join(compilersDir,
+            `air-${ver.toString()}`)
+        const sdkPath = path.join(compilerPath, 'sdk')
+
+        // Create internal directory
+        fs.mkdirSync(compilerPath)
+        fs.mkdirSync(sdkPath)
 
         if (ar) {
-            ...
-            return
+            if (!fs.existsSync(ar)) {
+                display.error('Specified archive doesn\'t exist.')
+                process.exit(1)
+            }
+
+            extract(ar, { dir: sdkPath, }, err => {
+                if (err) {
+                    display.error('Failed to extract archive files.')
+                    process.exit(1)
+                }
+
+                display.ok('Successfuly installed ' + display.wrapOkTerm('air'))
+            })
         }
-
-        const bar1 = new cliProgress.Bar({}
-            , cliProgress.Presets.shades_classic)
-
-        // Download archive.
-        //
-        // * Store ar..
-        // * Delete ar. ONLY once
-        // it's _extracted_.
-        const r = request('http://airdownload.adobe.com/air/win/download/latest/AIRSDK_Compiler.zip')
-        progress(r)
-            .on('progress', state =>
-                 r.update(state.percent))
-            .pipe(fs.createWriteStream(...))
-        r   .on('data', data => {
-                bar1.stop()
-                onDownload(data)
-            })
-            .on('error', e => {
-                bar1.stop()
-                onFail(e)
-            })
-            .on('response', res => {
-                if (res.statusCode === 201)
-                    bar1.start(res.headers['content-length'] || 0, 0)
-            })
+        else {
+            const bar1 = new cliProgress.Bar({}
+                , cliProgress.Presets.shades_classic)
+    
+            // Download archive.
+            const r = request('http://airdownload.adobe.com/air/win/download/latest/AIRSDK_Compiler.zip')
+            progress(r)
+                .on('progress', state => r.update(state.percent))
+                .pipe(fs.createWriteStream('AIRSDK_Compiler.zip'))
+    
+            r   .on('data', data => {
+                    bar1.stop()
+                    onDownload(data)
+                })
+                .on('error', e => {
+                    bar1.stop()
+                    onFail(e)
+                })
+                .on('response', res => {
+                    if (res.statusCode === 201)
+                        bar1.start(res.headers['content-length'] || 0, 0)
+                })
+        }
     }
     
     function onDownload(data) {
+        // Store archive, extract it and
+        // finally delete it.
         ...
     }
     
