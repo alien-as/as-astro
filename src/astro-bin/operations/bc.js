@@ -2,10 +2,13 @@ const {Command} = require('@astro-bin/command')
     , structure = require('@astro-bin/structure')
     , display   = require('@astro-bin/display')
 
-const {astroStorage,} = require('@astro-lib/storage')
+const {astroStorage,}     = require('@astro-lib/storage')
+    , {validPackageName,} = require('@astro-lib/validation')
 
-const fs   = require('fs')
-    , path = require('path')
+const fs          = require('fs')
+    , path        = require('path')
+    , https       = require('https')
+    , {spawnSync} = require('child_process')
 
 const prompts = require('prompts')
     , chalk   = require('chalk')
@@ -76,14 +79,56 @@ installCli
             process.exit(1)
         }
 
-        let ver = semver.validRange(args.ver || '*')
-        if (astroStorage.lookupCompiler(args.name, ver)) {
+        const range = semver.validRange(args.ver || '*')
+        if (range && astroStorage.lookupCompiler(args.name, range)) {
             console.log('Already installed!')
             process.exit(0)
         }
 
-        ...
+        switch (name) {
+            case 'air':
+                installAIR(range, args.ar)
+            default:
+                display.error('Unknown compiler: ' + name)
+                process.exit(1)
+        }
     })
+
+function installAIR(range, ar) {
+    if (spawnSync('javac', ['--help']).status) {
+        display.error(chalk `It sounds like {underline JDK} isn\'t installed.
+  {blue Tip:} {italic prefer openjdk-8}`)
+        process.exit(1)
+    }
+
+    const p = https.get('https://adobe.com/devnet/air/air-sdk-download.html')
+    p
+        .on('data', onPageLoad)
+        .on('error', failedOnVersionFetch)
+
+    function onPageLoad(data) {
+        const [_, ver] = data.match(/Compiler \(version\&nbsp\;([^ ]+)/)
+        if (!ver) failedOnVersionFetch()
+
+        // @todo Previous versions aren't downloadable.
+        if (!semver.satifies(ver = semver.coerce(ver), range)) {
+            display.error('Cannot download given version.')
+            process.exit(1)
+        }
+
+        
+    }
+
+    ...
+    ...
+    ...
+    ...
+}
+
+function failedOnVersionFetch() {
+    display.error('Failed fetching latest version.')
+    process.exit(1)
+}
 
 /*
 /// `bc XXX` subcommand
