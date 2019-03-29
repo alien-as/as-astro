@@ -1,7 +1,9 @@
 const {LocalStorage} = require('node-localstorage')
-const {Compiler} = require('./compiler')
+
+const {Compiler}         = require('./compiler')
     , {validPackageName} = require('./validation')
-const path = require('path')
+
+const path   = require('path')
     , semver = require('semver')
 
 const localStorage = new LocalStorage(path.join(__dirname, '../../data/config'))
@@ -9,6 +11,8 @@ const localStorage = new LocalStorage(path.join(__dirname, '../../data/config'))
 let astroStorage = {
     _compilers: null,
     _defaultCompiler: null,
+
+    // ## Compiler data
 
     compilers() {
         if (!this._compilers) {
@@ -36,6 +40,7 @@ let astroStorage = {
             if (!item) return null
 
             const {name, version: verRaw} = JSON.parse(item)
+
             const ver = semver.validRange(verRaw)
             if (!ver) return null
             const compilers = this.compilers()
@@ -50,6 +55,15 @@ let astroStorage = {
             }
         }
         return this._defaultCompiler
+    },
+    
+    lookupCompiler(name, range) {
+        for (let bc of this.compilers()) {
+            if (bc.name == name
+             && semver.satisfies(bc.version, range))
+                return bc
+        }
+        return null
     },
 }
 

@@ -1,11 +1,15 @@
 const {Command} = require('@astro-bin/command')
     , structure = require('@astro-bin/structure')
-    , display = require('@astro-bin/display')
+    , display   = require('@astro-bin/display')
+
 const {astroStorage,} = require('@astro-lib/storage')
-const fs = require('fs')
+
+const fs   = require('fs')
     , path = require('path')
+
 const prompts = require('prompts')
-    , chalk = require('chalk')
+    , chalk   = require('chalk')
+    , semver  = require('semver')
 
 let showCli = null
   , linkCli = null
@@ -65,18 +69,20 @@ installCli
     .onParse(args => {
         if (args.help)
             installCli.printUsage()
+
         const {name} = args
         if (!args.name) {
             display.error('Compiler name required.')
             process.exit(1)
         }
 
-        let ver = semver.validateRange(args.ver || '*')
+        let ver = semver.validRange(args.ver || '*')
         if (astroStorage.lookupCompiler(args.name, ver)) {
-            ...
-            ...
-            ...
+            console.log('Already installed!')
+            process.exit(0)
         }
+
+        ...
     })
 
 /*
