@@ -7,12 +7,14 @@ const {astroStorage,}     = require('@astro-lib/storage')
 
 const fs          = require('fs')
     , path        = require('path')
-    , https       = require('https')
+    , request     = require('request')
     , {spawnSync} = require('child_process')
 
-const prompts = require('prompts')
-    , chalk   = require('chalk')
-    , semver  = require('semver')
+const prompts     = require('prompts')
+    , chalk       = require('chalk')
+    , semver      = require('semver')
+    , progress    = require('request-progress')
+    , cliProgress = require('cli-progress')
 
 let showCli = null
   , linkCli = null
@@ -96,13 +98,12 @@ installCli
 
 function installAIR(range, ar) {
     if (spawnSync('javac', ['--help']).status) {
-        display.error(chalk `It sounds like {underline JDK} isn\'t installed.
-  {blue Tip:} {italic prefer openjdk-8}`)
+        display.error(chalk `{underline JDK} is required.
+  {cyan tip:} {italic look for openjdk-8}`)
         process.exit(1)
     }
 
-    const p = https.get('https://adobe.com/devnet/air/air-sdk-download.html')
-    p
+    request('https://adobe.com/devnet/air/air-sdk-download.html')
         .on('data', onPageLoad)
         .on('error', failedOnVersionFetch)
 
@@ -116,7 +117,50 @@ function installAIR(range, ar) {
             process.exit(1)
         }
 
-        
+        // Import fs and create
+        // internal directory etc...
+        ...
+
+        if (ar) {
+            ...
+            return
+        }
+
+        const bar1 = new cliProgress.Bar({}
+            , cliProgress.Presets.shades_classic)
+
+        // Download archive.
+        //
+        // * Store ar..
+        // * Delete ar. ONLY once
+        // it's _extracted_.
+        const r = request('http://airdownload.adobe.com/air/win/download/latest/AIRSDK_Compiler.zip')
+        progress(r)
+            .on('progress', state =>
+                 r.update(state.percent))
+            .pipe(fs.createWriteStream(...))
+        r   .on('data', data => {
+                bar1.stop()
+                onDownload(data)
+            })
+            .on('error', e => {
+                bar1.stop()
+                onFail(e)
+            })
+            .on('response', res => {
+                if (res.statusCode === 201)
+                    bar1.start(res.headers['content-length'] || 0, 0)
+            })
+    }
+    
+    function onDownload(data) {
+        ...
+    }
+    
+    function onFail(error) {
+        display.error(chalk `Failed downloading SDK.
+  {cyan status}: ${error.status}`)
+        process.exit(1)
     }
 
     ...
