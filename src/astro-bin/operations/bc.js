@@ -48,15 +48,35 @@ installCli = new Command('install')
 installCli
     .usage(installCli.optionsSection())
     .option({
+        name: 'name',
+        defaultOption: true,
+    })
+    .option({
+        name: 'ver',
+        alias: 'v',
+        typeLabel: '{underline string}',
+        summary: 'Compiler version',
+    })
+    .option({
         name: 'ar',
-        typeLabel: '{underline path}@'
+        typeLabel: '{underline path}'
         summary: 'Use existing archive',
     })
-    .op
     .onParse(args => {
         if (args.help)
             installCli.printUsage()
-        ...
+        const {name} = args
+        if (!args.name) {
+            display.error('Compiler name required.')
+            process.exit(1)
+        }
+
+        let ver = semver.validateRange(args.ver || '*')
+        if (astroStorage.lookupCompiler(args.name, ver)) {
+            ...
+            ...
+            ...
+        }
     })
 
 /*

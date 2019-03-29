@@ -1,7 +1,7 @@
 require('module-alias/register')
 
 const {Command} = require('@astro-bin/command')
-    ,  display = require('@astro-bin/display')
+    ,  display  = require('@astro-bin/display')
 
 const chalk = require('chalk')
 
