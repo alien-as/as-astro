@@ -4,7 +4,7 @@ const {Compiler} = require('./compiler')
 const path = require('path')
     , semver = require('semver')
 
-const localStorage = new LocalStorage(path.join(__dirname, '../../data'))
+const localStorage = new LocalStorage(path.join(__dirname, '../../data/config'))
 
 let astroStorage = {
     _compilers: null,

@@ -42,24 +42,24 @@ linkCli
         process.exit(1)
     })
 
-/*
-/// `bc XXX` subcommand
+/// `bc install` subcommand
 
-xxxCli = new Command('XXX')
-xxxCli
-    .usage({
-        header: 'Does?',
-        content: `{italic \
-$ astro bc xxx
-$ astro bc xxx
-$ astro bc xxx}`,
+installCli = new Command('install')
+installCli
+    .usage(installCli.optionsSection())
+    .option({
+        name: 'ar',
+        typeLabel: '{underline path}@'
+        summary: 'Use existing archive',
     })
-    .usage(xxxCli.optionsSection())
+    .op
     .onParse(args => {
         if (args.help)
-            xxxCli.printUsage()
+            installCli.printUsage()
+        ...
     })
 
+/*
 /// `bc XXX` subcommand
 
 xxxCli = new Command('XXX')
