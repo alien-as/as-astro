@@ -194,12 +194,11 @@ function installAIR(range, archive) {
                 path.join(sdkPath, 'AIR SDK Readme.txt'), 'binary')
             version = semver.coerce(readme.match(/Adobe AIR ([^ ]+) SDK/)[1])
 
-            if (!semver.satisfies(innerVer,
-                   semver.validRange(version)))
+            if (!semver.satisfies(version, range))
             {
                 console.log(chalk `{yellow note:} given version not matched`)
                 fs.renameSync(compilerPath,
-                    path.join(compilersDir, `air-${semver.coerce(innerVer)}`))
+                    path.join(compilersDir, `air-${semver.coerce(version)}`))
             }
         }
 
