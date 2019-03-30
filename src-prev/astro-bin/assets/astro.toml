@@ -1,9 +1,0 @@
-[package]
-name = '$1'
-version = '0.1.0'
-authors = ['$2']
-
-[dependencies]
-
-[$3]
-include = [$4]

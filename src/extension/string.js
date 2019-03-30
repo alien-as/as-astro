@@ -1,4 +1,4 @@
-const stringFmt = (s, ...args) => {
+const stringFormat = (s, ...args) => {
     if (args[0] && (args[0] instanceof Array))
         args = args[0]
     return s.replace(/\$(\d+|\$)/g, (_, s) =>
@@ -6,5 +6,5 @@ const stringFmt = (s, ...args) => {
 }
 
 module.exports = {
-    stringFmt,
+    stringFormat,
 }
