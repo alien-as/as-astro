@@ -47,13 +47,13 @@ $ astro init --lib}`,
                 let {name} = args
                 if (!name) name = path.basename(basePath)
                 if (!validPackageName(name)) {
-                    display.error('Illegal package name: ' + name)
+                    display.error('illegal package name: ' + name)
                     process.exit(1)
                 }
 
                 const kind = args.lib ? 'lib' : 'bin'
                 structure.init(basePath, name, kind)
-                display.ok('Initialized package '
+                display.ok('initialized package '
                     + display.wrapOkTerm(name))
             },
             cause => 0)

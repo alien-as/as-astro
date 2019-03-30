@@ -7,7 +7,7 @@ const {spawnSync} = require('child_process')
 const chalk = require('chalk')
 
 const {stringFormat} = require('@extension/string')
-const display       = require('@astro-bin/display')
+const display        = require('@astro-bin/display')
 
 /// Initialize package directory.
 ///
@@ -103,8 +103,8 @@ function gitGlobalUser() {
     const r1 = retrieveGitGlobalKey('user.name')
         , r2 = retrieveGitGlobalKey('user.email')
     if (r1.status) {
-        clfmt.error('Failed to execute Git. ' +
-            "If you haven'nt it installed, consult:\n  " +
+        display.error('failed to execute Git; ' +
+            "if you haven'nt it installed, please browse:\n  " +
             chalk `{cyan {underline https://git-scm.com/downloads}}`)
         process.exit(1)
     }
@@ -113,7 +113,7 @@ function gitGlobalUser() {
         , email = r2.stdout.replace(/[\n\r]/g, '')
 
     if (!name || !email) {
-        clfmt.error(`Missing user info.\n
+        display.error(`missing user info; try these commands:\n
   $ git config --global user.name nickname
   $ git config --global user.email email\n`)
         process.exit(1)

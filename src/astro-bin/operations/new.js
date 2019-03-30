@@ -38,7 +38,7 @@ $ astro new --lib mech}`,
 
         const {name} = args
         if (!validPackageName(name)) {
-            display.error('Illegal package name: ' + name)
+            display.error('illegal package name: ' + name)
             process.exit(1)
         }
 

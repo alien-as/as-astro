@@ -88,13 +88,13 @@ installCli
 
         const {name} = args
         if (!name) {
-            display.error('Compiler name required.')
+            display.error('compiler name required')
             process.exit(1)
         }
 
         const range = semver.validRange(args.ver || '*')
         if (range && astroStorage.lookupCompiler(args.name, range)) {
-            console.log('Already installed!')
+            console.log('already installed!')
             process.exit(0)
         }
 
@@ -103,15 +103,15 @@ installCli
                 installAIR(range, args.file)
                 break
             default:
-                display.error('Unknown compiler: ' + name)
+                display.error('unknown compiler: ' + name)
                 process.exit(1)
         }
     })
 
 function installAIR(range, archive) {
     if (spawnSync('java', ['--help']).error) {
-        display.error('JRE must be installed.')
-        // display.error(chalk `JDK must be installed.
+        display.error('JRE not installed')
+        // display.error(chalk `JDK must be installed
         //     {cyan tip:} {italic look for openjdk-8}`)
         process.exit(1)
     }
@@ -149,7 +149,7 @@ function installAIR(range, archive) {
 
         // @todo Previous versions aren't downloadable.
         if (!semver.satisfies(version, range)) {
-            display.error('Cannot download given version.')
+            display.error('can\'t download given version')
             process.exit(1)
         }
 
@@ -188,7 +188,7 @@ function installAIR(range, archive) {
 
     function installNoWeb() {
         if (!fs.existsSync(archive)) {
-            display.error('Specified archive doesn\'t exist.')
+            display.error('specified archive doesn\'t exist')
             process.exit(1)
         }
 
@@ -216,18 +216,18 @@ function installAIR(range, archive) {
     // Etc.
 
     function onFail(error) {
-        display.error(chalk `Failed downloading SDK.
+        display.error(chalk `failed downloading SDK
   {cyan status}: ${error.status}`)
         process.exit(1)
     }
 
     function finishInstall(error) {
         if (error) {
-            display.error('Failed to extract archive files.')
+            display.error('failed to extract archive files')
             process.exit(1)
         }
 
-        display.ok(`Successfuly installed ${display.wrapOkTerm('air')}`)
+        display.ok(`${display.wrapOkTerm('air')} installed!`)
 
         const localStorage = astroStorage.localStorage()
 
@@ -245,7 +245,7 @@ function installAIR(range, archive) {
 }
 
 function failedOnVersionFetch() {
-    display.error('Failed fetching latest version.')
+    display.error('failed fetching latest version.')
     process.exit(1)
 }
 
@@ -267,7 +267,7 @@ uninstallCli
             uninstallCli.printUsage()
         const {name, ver: rangeRaw} = args
         if (!name) {
-            display.error('Compiler name required.')
+            display.error('compiler name required.')
             process.exit(1)
         }
 

@@ -104,7 +104,7 @@ class Command {
                 return false
             }
             else if (this._onUnknown)
-                this._onUnknown(arg, args._unknown)
+                this._onUnknown(args._unknown)
             else {
                 console.error(`Unknown operation: ${arg}`)
                 process.exit(1)
@@ -112,7 +112,7 @@ class Command {
         }
         else if (args._unknown) {
             if (this._onUnknown)
-                this._onUnknown(arg, args._unknown)
+                this._onUnknown(args._unknown)
             else {
                 if (arg[0] === '-')
                     console.error(`Unknown option: ${arg}`)
