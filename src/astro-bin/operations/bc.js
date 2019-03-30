@@ -178,14 +178,14 @@ function installAIR(range, archive) {
     // #2 no-web-install
 
     function installNoWeb() {
-        if (!fs.existsSync(archivePath)) {
+        if (!fs.existsSync(archive)) {
             display.error('Specified archive doesn\'t exist.')
             process.exit(1)
         }
 
         version = semver.coerce('1.99999')
         createDirs()
-        extract(archivePath, { dir: sdkPath, }, finishNoWeb)
+        extract(archive, { dir: sdkPath, }, finishNoWeb)
     }
 
     function finishNoWeb(err) {
