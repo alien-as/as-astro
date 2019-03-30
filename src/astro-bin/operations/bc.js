@@ -263,14 +263,31 @@ uninstallCli
             display.error('Compiler name required.')
             process.exit(1)
         }
+
         const range = semver.validRange(rangeRaw)
+        const compilers = astroStorage.compilers()
+            .filter(o => o.name === name)
+
         if (range) {
-            // Uninstall every {name} compiler under {range}
-            ...
+            for (let i = 0; i !== compilers.length; ++i) {
+                const {version: ver} = compilers[i]
+                if (semver.compiler.satisfies(ver, range)) {
+                    compilers.splice(i, 1)
+                    --i
+                    fs.rmdirSync(path.join(compilersDir,
+                        `${name}-${ver.toString()}`))
+                }
+            }
         } else {
-            ...
+            while (compilers.length) {
+                const [{version: ver}] = compilers.splice(0, 1)
+                fs.rmdirSync(path.join(compilersDir,
+                        `${name}-${ver.toString()}`))
+            }
         }
-        console.log('`uninstall` unimplemented.')
+
+        astroStorage.localStorage.setItem('bc',
+            JSON.stringify(compilers))
     })
 
 /*
