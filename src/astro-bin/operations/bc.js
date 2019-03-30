@@ -117,13 +117,14 @@ function installAIR(range, archive) {
     if (archive) {
         const [archivePath, versionRaw] = archive.split(':')
 
-        if (!(version = semver.valid(versionRaw))) {
-            display.error(chalk `
-  {cyan help:} specify SDK version as follows:
-
+        if (!versionRaw) {
+            display.error(chalk `SDK version unspecified.\n
+  {cyan help:} specify SDK version as follows:\n
     {italic $ astro bc install air -f compiler.zip{bold :32.0.0.89}}`)
             process.exit(1)
         }
+        
+        version = semver.coerce(versionRaw)
 
         if (!semver.satisfies(version, range)) {
             display.error(`Version not satisfied: ${version} ∉ ${range}`)
@@ -135,6 +136,7 @@ function installAIR(range, archive) {
             process.exit(1)
         }
 
+        createDirs()
         extract(archivePath, { dir: sdkPath, }, finishArchive)
     }
     else {
@@ -146,6 +148,8 @@ function installAIR(range, archive) {
     }
 
     function createDirs() {
+        compilerPath = path.join(compilersDir, `air-${version.toString()}`)
+        sdkPath = path.join(compilerPath, 'sdk')
         if (!fs.existsSync(compilerPath)) fs.mkdirSync(compilerPath)
         if (!fs.existsSync(sdkPath)) fs.mkdirSync(sdkPath)
     }
@@ -153,19 +157,16 @@ function installAIR(range, archive) {
     // #1 web-install
 
     function webInstall(body) {
-        ver = semver.coerce(body.toString('binary')
+        version = semver.coerce(body.toString('binary')
             .match(/Compiler \(version\&nbsp\;([^ ]+)/)[1])
-        if (!ver) failedOnVersionFetch()
+        if (!version) failedOnVersionFetch()
 
         // @todo Previous versions aren't downloadable.
-        if (!semver.satisfies(ver, range)) {
+        if (!semver.satisfies(version, range)) {
             display.error('Cannot download given version.')
             process.exit(1)
         }
 
-        // Compiler directory
-        compilerPath = path.join(compilersDir, `air-${ver.toString()}`)
-        sdkPath = path.join(compilerPath, 'sdk')
         createDirs()
 
         const bar1 = new cliProgress.Bar({

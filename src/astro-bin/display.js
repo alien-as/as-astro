@@ -6,7 +6,7 @@ module.exports = {
     // ## Formatting
 
     error(message) {
-        console.error(chalk `{magenta Error:} {bgBlack {white ${ message.toString() }}}`)
+        console.error(chalk `{red Error:} {bgBlack {white ${ message.toString() }}}`)
     },
 
     ok(message) {
