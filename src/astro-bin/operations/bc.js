@@ -147,7 +147,7 @@ function installAIR(range, ar) {
         }
         else {
             const bar1 = new cliProgress.Bar({
-                format: '[{bar}] {percentage}% | {eta} | {value}/{total}',
+                format: '[{bar}] {percentage}% | {value}/{total}',
             }, cliProgress.Presets.shades_grey)
 
             // Download archive.
