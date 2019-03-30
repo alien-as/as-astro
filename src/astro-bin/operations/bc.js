@@ -132,9 +132,9 @@ function installAIR(range, ar) {
         sdkPath = path.join(compilerPath, 'sdk')
 
         // Create internal directory
-        if (!fs.exists(compilerPath))
+        if (!fs.existsSync(compilerPath))
             fs.mkdirSync(compilerPath)
-        if (!fs.exists(sdkPath))
+        if (!fs.existsSync(sdkPath))
         fs.mkdirSync(sdkPath)
 
         if (ar) {
