@@ -71,7 +71,7 @@ installCli
         summary: 'Compiler version',
     })
     .option({
-        name: 'ar',
+        name: 'f',
         typeLabel: '{underline path}',
         summary: 'Use existing archive',
     })
@@ -101,25 +101,74 @@ installCli
         }
     })
 
-function installAIR(range, ar) {
+function installAIR(range, archive) {
     if (spawnSync('javac', ['--help']).status) {
         display.error(chalk `{underline JDK} is required.
   {cyan tip:} {italic look for openjdk-8}`)
         process.exit(1)
     }
 
-    request('https://adobe.com/devnet/air/air-sdk-download.html',
-        (err, resp, body) => {
-            if (err) failedOnVersionFetch(resp)
-            onPageLoad(body)
-        })
-
     let compilerPath = ''
       , sdkPath      = ''
 
-    let ver = null
+    let version = null
 
-    function onPageLoad(body) {
+    if (archive) {
+        const [archivePath, versionRaw] = archive.split(':')
+
+        if (!(version = semver.valid(versionRaw))) {
+            display.error(chalk `
+  {cyan help:} specify SDK version as follows:
+
+    {italic $ astro bc install air -f compiler.zip{bold :32.0.0.89}}`)
+            process.exit(1)
+        }
+
+        if (!semver.satisfies(version, range)) {
+            display.error(`Version not satisfied: ${version} ∉ ${range}`)
+            process.exit(1)
+        }
+
+        if (!fs.existsSync(archivePath)) {
+            display.error('Specified archive doesn\'t exist.')
+            process.exit(1)
+        }
+
+        extract(archivePath, { dir: sdkPath, }, err => {
+            if (!err) {
+                const readme = fs.readFileSync(
+                    path.join(sdkPath, 'AIR SDK Readme.txt'), 'binary')
+                const [_, innerVer] = readme.match(/Adobe AIR ([^ ]+) SDK/)
+
+                if (innerVer
+                 && !semver.satisfies(innerVer,
+                        semver.validRange(version))
+                {
+                    console.log(chalk `{cyan help:} given version not matched. Renaming...`)
+                }
+            }
+
+            finishInstall(err)
+        })
+
+        if ()
+    }
+    else {
+        request('https://adobe.com/devnet/air/air-sdk-download.html',
+        (err, resp, body) => {
+            if (err) failedOnVersionFetch(resp)
+            webInstall(body)
+        })
+    }
+
+    function createDirs() {
+        if (!fs.existsSync(compilerPath)) fs.mkdirSync(compilerPath)
+        if (!fs.existsSync(sdkPath)) fs.mkdirSync(sdkPath)
+    }
+
+    // #1 web-install
+
+    function webInstall(body) {
         ver = semver.coerce(body.toString('binary').match(/Compiler \(version\&nbsp\;([^ ]+)/)[1])
         if (!ver) failedOnVersionFetch()
 
@@ -129,57 +178,46 @@ function installAIR(range, ar) {
             process.exit(1)
         }
 
-        compilerPath = path.join(compilersDir,
-            `air-${ver.toString()}`)
+        // Compiler directory
+        compilerPath = path.join(compilersDir, `air-${ver.toString()}`)
         sdkPath = path.join(compilerPath, 'sdk')
+        createDirs()
 
-        // Create internal directory
-        if (!fs.existsSync(compilerPath))
-            fs.mkdirSync(compilerPath)
-        if (!fs.existsSync(sdkPath))
-            fs.mkdirSync(sdkPath)
+        const bar1 = new cliProgress.Bar({
+            format: '[{bar}] {percentage}% | {value}/{total}',
+        }, cliProgress.Presets.shades_grey)
 
-        if (ar) {
-            if (!fs.existsSync(ar)) {
-                display.error('Specified archive doesn\'t exist.')
-                process.exit(1)
-            }
-
-            extract(ar, { dir: sdkPath, }, finishInstall)
-        }
-        else {
-            const bar1 = new cliProgress.Bar({
-                format: '[{bar}] {percentage}% | {value}/{total}',
-            }, cliProgress.Presets.shades_grey)
-
-            // Download archive.
-            progress(request.get('http://airdownload.adobe.com/air/win/download/latest/AIRSDK_Compiler.zip')
-                .on('response', resp => {
-                    if (resp.statusCode === 200)
-                        bar1.start(resp.headers['content-length'] || 0, 0)
+        // Download archive.
+        progress(request.get('http://airdownload.adobe.com/air/win/download/latest/AIRSDK_Compiler.zip')
+            .on('response', resp => {
+                if (resp.statusCode === 200)
+                    bar1.start(resp.headers['content-length'] || 0, 0)
+            })
+        )
+            .on('end', _ => {
+                bar1.stop()
+                extract(ar, { dir: sdkPath, }, err => {
+                    if (!err)
+                        fs.unlinkSync(arPath)
+                    finishInstall(err)
                 })
-            )
-                .on('end', _ => {
-                    bar1.stop()
-                    extract(ar, { dir: sdkPath, }, err => {
-                        if (!err)
-                            fs.unlinkSync(arPath)
-                        finishInstall(err)
-                    })
-                })
-                .on('error', err => {
-                    bar1.stop()
-                    onFail(err)
-                })
-                .on('progress', state => bar1.update(state.size.transferred))
-                .pipe(fs.createWriteStream(path.join(compilerPath, 'AIRSDK_Compiler.zip')))
-        }
+            })
+            .on('error', err => {
+                bar1.stop()
+                onFail(err)
+            })
+            .on('progress', state => bar1.update(state.size.transferred))
+            .pipe(fs.createWriteStream(path.join(compilerPath, 'AIRSDK_Compiler.zip')))
     }
-    
+
     function onFail(error) {
         display.error(chalk `Failed downloading SDK.
   {cyan status}: ${error.status}`)
         process.exit(1)
+    }
+
+    function installArchive() {
+        ...
     }
 
     function finishInstall(error) {
