@@ -41,13 +41,10 @@ cli
     .usage({
         header: 'Compilers',
         content: `Astro manages compilers for you. \
-Built-in ones have their own sub-command, for example:\
-
-  {italic $ astro air}\
-
+Built-in ones have their own sub-command, for example:
+  {italic $ astro air}
 For executing any other compiler or specific version of it, \
-you can run astro-sub:\
-
+you can run astro-sub:
   {italic $ astro-sub air}`,
     })
     .onParse(args => {
