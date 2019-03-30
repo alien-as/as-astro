@@ -103,9 +103,10 @@ installCli
     })
 
 function installAIR(range, archive) {
-    if (spawnSync('javac', ['--help']).error) {
-        display.error(chalk `JDK must be installed.
-  {cyan tip:} {italic look for openjdk-8}`)
+    if (spawnSync('java', ['--help']).error) {
+        display.error('JRE must be installed.')
+        // display.error(chalk `JDK must be installed.
+        //     {cyan tip:} {italic look for openjdk-8}`)
         process.exit(1)
     }
 
