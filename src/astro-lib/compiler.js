@@ -1,10 +1,10 @@
 class Compiler {
-    constructor(name, version, isSealed, isLocal) {
+    constructor(name, version) {
         this.name = name
         /// <type SemVer/>
         this.version = version
-        this.isSealed = isSealed
-        this.isLocal = isLocal
+        this.isSealed = false
+        this.cliScript = ''
         this._build = null
         this._run = null
         this._test = null

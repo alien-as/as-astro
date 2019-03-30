@@ -26,12 +26,14 @@ let astroStorage = {
 
             if (raw) {
                 for (let r of raw) {
-                    let {name, version, isSealed, isLocal,} = r
-                    version = semver.coerce(version)
-                    if (!(validPackageName(name) && version))
+                    let {name, verRaw} = r
+                    const ver = semver.coerce(verRaw)
+                    if (!(validPackageName(name) && ver))
                         continue
-                    this._compilers.push(new Compiler(
-                        name, version, !isSealed, !!isLocal))
+                    const bc = new Compiler(name, ver)
+                    bc.isSealed = !r.isSealed
+                    bc.cliScript = r.cliScript || ''
+                    this._compilers.push(bc)
                 }
             }
         }

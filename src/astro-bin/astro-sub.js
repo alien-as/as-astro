@@ -34,8 +34,8 @@ $ astro-sub {green <compiler>} {green [version]} {green <command>}}`
                 display.error(`unknown compiler: ${name}`)
                 process.exit(1)
             }
-            ls.sort(semver.rcomparator)[ls.length - 1]
-            if (ls
+            const latest = ls.sort(semver.rcomparator)[ls.length - 1]
+            ...
         }
     })
 

@@ -45,14 +45,14 @@ $ astro new --lib mech}`,
         let basePath = path.join(process.cwd(), name)
 
         if (fs.existsSync(basePath)) {
-            display.error(`A directory or file '${name}' already exists`)
+            display.error(`a directory or file '${name}' already exists`)
             process.exit(1)
         }
 
         fs.mkdirSync(basePath)
         const kind = args.lib ? 'lib' : 'bin'
         structure.init(basePath, name, kind)
-        display.ok(`Created package ${display.wrapOkTerm(name)}`)
+        display.ok(`created package ${display.wrapOkTerm(name)}`)
     })
 
 module.exports = cmd
