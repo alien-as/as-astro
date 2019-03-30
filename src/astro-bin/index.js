@@ -38,11 +38,23 @@ cli
             { name: '', summary: '' }, */
         ],
     })
+    .usage({
+        header: 'Compilers',
+        content: `Astro manages compilers for you. \
+Built-in ones have their own sub-command, for example:\
+
+  {italic $ astro air}\
+
+For executing any other compiler or specific version of it, \
+you can run astro-sub:\
+
+  {italic $ astro-sub air}`,
+    })
     .onParse(args => {
         if (args.help)
             cli.printUsage()
         else
-            console.log(chalk `Astro {blue 0.1.0}`)
+            console.log(chalk `Running Astro ver. 0.1.0`)
     })
 
 cli.parse(process.argv.slice(2))

@@ -56,6 +56,7 @@ linkCli
     .onParse(args => {
         if (args.help)
             linkCli.printUsage()
+        // reserved = ['air']
         display.error(chalk `{red \`link\`} command unavailable`)
         process.exit(1)
     })
