@@ -146,8 +146,9 @@ function installAIR(range, ar) {
             extract(ar, { dir: sdkPath, }, onExtract)
         }
         else {
-            const bar1 = new cliProgress.Bar({}
-                , cliProgress.Presets.shades_classic)
+            const bar1 = new cliProgress.Bar({
+                format: '[{bar}] {percentage}% | {eta} | {value}/{total}',
+            }, cliProgress.Presets.shades_grey)
 
             // Download archive.
             progress(request.get('http://airdownload.adobe.com/air/win/download/latest/AIRSDK_Compiler.zip')
@@ -194,6 +195,7 @@ function failedOnVersionFetch() {
     process.exit(1)
 }
 
+/*
 /// `bc XXX` subcommand
 
 xxxCli = new Command('XXX')
