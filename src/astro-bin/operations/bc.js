@@ -143,7 +143,7 @@ function installAIR(range, ar) {
                 process.exit(1)
             }
 
-            extract(ar, { dir: sdkPath, }, onExtract)
+            extract(ar, { dir: sdkPath, }, finishInstall)
         }
         else {
             const bar1 = new cliProgress.Bar({
@@ -162,7 +162,7 @@ function installAIR(range, ar) {
                     extract(ar, { dir: sdkPath, }, err => {
                         if (!err)
                             fs.unlinkSync(arPath)
-                        onExtract(err)
+                        finishInstall(err)
                     })
                 })
                 .on('error', err => {
@@ -179,14 +179,15 @@ function installAIR(range, ar) {
   {cyan status}: ${error.status}`)
         process.exit(1)
     }
-    
-    function onExtract(error) {
+
+    function finishInstall(error) {
         if (error) {
             display.error('Failed to extract archive files.')
             process.exit(1)
         }
 
         display.ok(`Successfuly installed ${display.wrapOkTerm('air')}`)
+        astroStorage.
     }
 }
 
