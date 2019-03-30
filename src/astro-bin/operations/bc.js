@@ -165,9 +165,9 @@ function installAIR(range, ar) {
                         onExtract(err)
                     })
                 })
-                .on('error', e => {
+                .on('error', err => {
                     bar1.stop()
-                    onFail(e)
+                    onFail(err)
                 })
                 .on('progress', state => bar1.update(state.size.transferred))
                 .pipe(fs.createWriteStream(path.join(compilerPath, 'AIRSDK_Compiler.zip')))
