@@ -11,3 +11,8 @@
 * `$ astro publish` Nop
 * `$ astro self` Nop
   * `$ astro self clean` — Removes unused downloads + builds (SWCs, ABCs...)
+
+## Compiler
+
+* Apply 1-grade inheritance
+* Detect built-ins
