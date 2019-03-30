@@ -30,9 +30,14 @@ let astroStorage = {
                     const ver = semver.coerce(verRaw)
                     if (!(validPackageName(name) && ver))
                         continue
-                    const bc = new Compiler(name, ver)
+                    let bc = null
+                    if (Compiler.isBuiltin(name))
+                        bc = new BuiltinCompiler(name, ver)
+                    else {
+                        bc = new CustomCompiler(name, ver)
+                        bc._cliScript = r.cliScript || ''
+                    }
                     bc.isSealed = !r.isSealed
-                    bc.cliScript = r.cliScript || ''
                     this._compilers.push(bc)
                 }
             }

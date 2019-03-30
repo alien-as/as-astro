@@ -22,20 +22,22 @@ $ astro-sub {green <compiler>} {green [version]} {green <command>}}`
     })
     .onUnknown(args => {
         const [name, verRaw] = args
-        const verRange = semver.validRange(verRange)
-
+        const verRange = semver.validRange(verRaw)
         const compilers = astroStorage.compilers()
 
+        const ls = compilers.filter(o => o.name === name)
+
+        if (!ls.length) {
+            display.error(`unknown compiler: ${name}`)
+            process.exit(1)
+        }
+
         if (verRange) {
+            const ver = semver.maxSatisfying(ls, verRange)
             ...
         } else {
-            const ls = compilers.filter(o => o.name === name)
-            if (!ls.length) {
-                display.error(`unknown compiler: ${name}`)
-                process.exit(1)
-            }
-            const latest = ls.sort(semver.rcomparator)[ls.length - 1]
-            ...
+            const lastest = ls.sort(semver.rcomparator)[ls.length - 1]
+            lastest.execCommand(args.slice(1))
         }
     })
 
