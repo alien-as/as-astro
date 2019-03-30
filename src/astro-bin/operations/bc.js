@@ -169,7 +169,8 @@ function installAIR(range, archive) {
     // #1 web-install
 
     function webInstall(body) {
-        ver = semver.coerce(body.toString('binary').match(/Compiler \(version\&nbsp\;([^ ]+)/)[1])
+        ver = semver.coerce(body.toString('binary')
+            .match(/Compiler \(version\&nbsp\;([^ ]+)/)[1])
         if (!ver) failedOnVersionFetch()
 
         // @todo Previous versions aren't downloadable.
@@ -187,6 +188,8 @@ function installAIR(range, archive) {
             format: '[{bar}] {percentage}% | {value}/{total}',
         }, cliProgress.Presets.shades_grey)
 
+        const archivePath = path.join(compilerPath, 'AIRSDK_Compiler.zip')
+
         // Download archive.
         progress(request.get('http://airdownload.adobe.com/air/win/download/latest/AIRSDK_Compiler.zip')
             .on('response', resp => {
@@ -196,7 +199,7 @@ function installAIR(range, archive) {
         )
             .on('end', _ => {
                 bar1.stop()
-                extract(ar, { dir: sdkPath, }, err => {
+                extract(archivePath, { dir: sdkPath, }, err => {
                     if (!err)
                         fs.unlinkSync(arPath)
                     finishInstall(err)
@@ -207,7 +210,7 @@ function installAIR(range, archive) {
                 onFail(err)
             })
             .on('progress', state => bar1.update(state.size.transferred))
-            .pipe(fs.createWriteStream(path.join(compilerPath, 'AIRSDK_Compiler.zip')))
+            .pipe(fs.createWriteStream(archivePath))
     }
 
     function onFail(error) {
