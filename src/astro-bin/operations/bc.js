@@ -246,10 +246,30 @@ function failedOnVersionFetch() {
 
 uninstallCli = new Command('uninstall')
 uninstallCli
+    .option({
+        name: 'name',
+        defaultOption: true ,
+    })
+    .option({
+        name: 'ver',
+        alias: 'v',
+    })
     .usage(uninstallCli.optionsSection())
     .onParse(args => {
         if (args.help)
             uninstallCli.printUsage()
+        const {name, ver: rangeRaw} = args
+        if (!name) {
+            display.error('Compiler name required.')
+            process.exit(1)
+        }
+        const range = semver.validRange(rangeRaw)
+        if (range) {
+            // Uninstall every {name} compiler under {range}
+            ...
+        } else {
+            ...
+        }
         console.log('`uninstall` unimplemented.')
     })
 

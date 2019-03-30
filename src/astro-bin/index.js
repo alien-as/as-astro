@@ -6,7 +6,7 @@ const {Command} = require('@astro-bin/command')
 const chalk = require('chalk')
 
 // #### Operations
-//
+
 const [ bcCli, newCli, initCli, ] = require('./operations/$merged')
 
 /// ## `$ astro`
