@@ -71,7 +71,8 @@ installCli
         summary: 'Compiler version',
     })
     .option({
-        name: 'f',
+        name: 'file',
+        label: 'f',
         typeLabel: '{underline path}',
         summary: 'Use existing archive',
     })
@@ -93,7 +94,7 @@ installCli
 
         switch (name) {
             case 'air':
-                installAIR(range, args.ar)
+                installAIR(range, args.file)
                 break
             default:
                 display.error('Unknown compiler: ' + name)
