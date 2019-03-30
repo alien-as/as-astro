@@ -117,8 +117,10 @@ function installAIR(range, ar) {
     let compilerPath = ''
       , sdkPath      = ''
 
+    let ver = null
+
     function onPageLoad(body) {
-        const ver = semver.coerce(body.toString('binary').match(/Compiler \(version\&nbsp\;([^ ]+)/)[1])
+        ver = semver.coerce(body.toString('binary').match(/Compiler \(version\&nbsp\;([^ ]+)/)[1])
         if (!ver) failedOnVersionFetch()
 
         // @todo Previous versions aren't downloadable.
