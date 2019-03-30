@@ -1,7 +1,6 @@
 //! Console displaying.
 
 const chalk = require('chalk')
-const oktColor = chalk.rgb(0x1A, 0x30, 0xFF)
 
 module.exports = {
     // ## Formatting
@@ -15,6 +14,6 @@ module.exports = {
     },
 
     wrapOkTerm(term) {
-        return oktColor.bold(term)
+        return chalk.cyan.bold(term)
     },
 }

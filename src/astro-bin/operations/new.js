@@ -52,8 +52,7 @@ $ astro new --lib mech}`,
         fs.mkdirSync(basePath)
         const kind = args.lib ? 'lib' : 'bin'
         structure.init(basePath, name, kind)
-        display.ok('Created package '
-            + display.wrapOkTerm(name))
+        display.ok(`Created package ${display.wrapOkTerm(name)}`)
     })
 
 module.exports = cmd

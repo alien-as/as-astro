@@ -195,24 +195,18 @@ function failedOnVersionFetch() {
     process.exit(1)
 }
 
-/*
-/// `bc XXX` subcommand
+/// `bc uninstall` subcommand
 
-xxxCli = new Command('XXX')
-xxxCli
-    .usage({
-        header: 'Does?',
-        content: `{italic \
-$ astro bc xxx
-$ astro bc xxx
-$ astro bc xxx}`,
-    })
-    .usage(xxxCli.optionsSection())
+uninstallCli = new Command('uninstall')
+uninstallCli
+    .usage(uninstallCli.optionsSection())
     .onParse(args => {
         if (args.help)
-            xxxCli.printUsage()
+            uninstallCli.printUsage()
+        console.log('`uninstall` unimplemented.')
     })
 
+/*
 /// `bc XXX` subcommand
 
 xxxCli = new Command('XXX')
