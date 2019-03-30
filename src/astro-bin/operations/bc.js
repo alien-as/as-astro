@@ -103,8 +103,8 @@ installCli
     })
 
 function installAIR(range, archive) {
-    if (spawnSync('javac', ['--help']).status) {
-        display.error(chalk `{underline JDK} is required.
+    if (spawnSync('javac', ['--help']).error) {
+        display.error(chalk `JDK must be installed.
   {cyan tip:} {italic look for openjdk-8}`)
         process.exit(1)
     }
@@ -127,7 +127,9 @@ function installAIR(range, archive) {
     function createDirs() {
         compilerPath = path.join(compilersDir, `air-${version.toString()}`)
         sdkPath = path.join(compilerPath, 'sdk')
-        if (!fs.existsSync(compilerPath)) fs.mkdirSync(compilerPath)
+        if (fs.existsSync(compilerPath))
+            fs.rmdirSync(compilerPath)
+        fs.mkdirSync(compilerPath)
         if (!fs.existsSync(sdkPath)) fs.mkdirSync(sdkPath)
     }
 
