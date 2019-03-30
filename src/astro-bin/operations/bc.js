@@ -134,24 +134,7 @@ function installAIR(range, archive) {
             process.exit(1)
         }
 
-        extract(archivePath, { dir: sdkPath, }, err => {
-            if (!err) {
-                const readme = fs.readFileSync(
-                    path.join(sdkPath, 'AIR SDK Readme.txt'), 'binary')
-                const [_, innerVer] = readme.match(/Adobe AIR ([^ ]+) SDK/)
-
-                if (innerVer
-                 && !semver.satisfies(innerVer,
-                        semver.validRange(version))
-                {
-                    console.log(chalk `{cyan help:} given version not matched. Renaming...`)
-                }
-            }
-
-            finishInstall(err)
-        })
-
-        if ()
+        extract(archivePath, { dir: sdkPath, }, finishArchive)
     }
     else {
         request('https://adobe.com/devnet/air/air-sdk-download.html',
@@ -213,14 +196,33 @@ function installAIR(range, archive) {
             .pipe(fs.createWriteStream(archivePath))
     }
 
+    // #2 no-web-install
+
+    function installNoWeb(err) {
+        if (!err) {
+            const readme = fs.readFileSync(
+                path.join(sdkPath, 'AIR SDK Readme.txt'), 'binary')
+            const [_, innerVer] = readme.match(/Adobe AIR ([^ ]+) SDK/)
+
+            if (innerVer
+             && !semver.satisfies(innerVer,
+                    semver.validRange(version))
+            {
+                console.log(chalk `{cyan help:} given version not matched. Renaming...`)
+                fs.renameSync(compilerPath,
+                    path.join(compilersDir, `air-${semver.coerce(innerVer)}`))
+            }
+        }
+
+        finishInstall(err)
+    }
+
+    // Etc.
+
     function onFail(error) {
         display.error(chalk `Failed downloading SDK.
   {cyan status}: ${error.status}`)
         process.exit(1)
-    }
-
-    function installArchive() {
-        ...
     }
 
     function finishInstall(error) {
