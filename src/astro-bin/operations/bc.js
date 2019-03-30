@@ -194,7 +194,6 @@ function failedOnVersionFetch() {
     process.exit(1)
 }
 
-/*
 /// `bc XXX` subcommand
 
 xxxCli = new Command('XXX')
