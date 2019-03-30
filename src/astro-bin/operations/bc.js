@@ -15,7 +15,12 @@ const prompts     = require('prompts')
     , semver      = require('semver')
     , progress    = require('request-progress')
     , cliProgress = require('cli-progress')
+
+    // $ 7z x
     , extract     = require('extract-zip')
+
+    // $ rm -rf
+    , rimraf      = require('rimraf')
 
 const dataDir = path.join(__dirname, '../../../data')
 const compilersDir = path.join(dataDir, 'compilers')
@@ -129,7 +134,7 @@ function installAIR(range, archive) {
         compilerPath = path.join(compilersDir, `air-${version.toString()}`)
         sdkPath = path.join(compilerPath, 'sdk')
         if (fs.existsSync(compilerPath))
-            fs.rmdirSync(compilerPath)
+            rimraf.sync(compilerPath)
         fs.mkdirSync(compilerPath)
         if (!fs.existsSync(sdkPath)) fs.mkdirSync(sdkPath)
     }
@@ -275,19 +280,19 @@ uninstallCli
                 if (semver.compiler.satisfies(ver, range)) {
                     compilers.splice(i, 1)
                     --i
-                    fs.rmdirSync(path.join(compilersDir,
+                    rimraf.sync(path.join(compilersDir,
                         `${name}-${ver.toString()}`))
                 }
             }
         } else {
             while (compilers.length) {
                 const [{version: ver}] = compilers.splice(0, 1)
-                fs.rmdirSync(path.join(compilersDir,
+                rimraf.sync(path.join(compilersDir,
                         `${name}-${ver.toString()}`))
             }
         }
 
-        astroStorage.localStorage.setItem('bc',
+        astroStorage.localStorage().setItem('bc',
             JSON.stringify(compilers))
     })
 
@@ -438,8 +443,8 @@ $ astro bc update {gray # Updates installed compilers}}`,
     .subCommands([
         showCli,
         linkCli,
-        installCli, /*
-        uninstallCli,
+        installCli,
+        uninstallCli, /*
         sealCli,
         updateCli
         defaultCli */

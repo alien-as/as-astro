@@ -30,7 +30,8 @@
     "cli-progress": "^2.1.1",
     "extract-zip": "^1.6.7",
     "request": "^2.88.0",
-    "prompts": "^2.0.4"
+    "prompts": "^2.0.4",
+    "rimraf": "^2.6.3"
   },
   "_moduleAliases": {
     "@astro-bin": "src/astro-bin",
