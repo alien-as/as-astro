@@ -143,7 +143,7 @@ function installAIR(range, ar) {
                 process.exit(1)
             }
 
-            extract(ar, { dir: sdkPath, }, complete)
+            extract(ar, { dir: sdkPath, }, onExtract)
         }
         else {
             const bar1 = new cliProgress.Bar({}
@@ -161,7 +161,7 @@ function installAIR(range, ar) {
                     extract(ar, { dir: sdkPath, }, err => {
                         if (!err)
                             fs.unlinkSync(arPath)
-                        complete(err)
+                        onExtract(err)
                     })
                 })
                 .on('error', e => {
