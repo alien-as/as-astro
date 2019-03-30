@@ -230,7 +230,7 @@ function installAIR(range, archive) {
         else
             compilers = JSON.parse(compilersRaw)
 
-        compilers.push({ name: 'air', version, })
+        compilers.push({ name: 'air', version: version.toString(), })
         localStorage.setItem('bc', JSON.stringify(compilers))
     }
 }
