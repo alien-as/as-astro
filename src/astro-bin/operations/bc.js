@@ -135,7 +135,7 @@ function installAIR(range, ar) {
         if (!fs.existsSync(compilerPath))
             fs.mkdirSync(compilerPath)
         if (!fs.existsSync(sdkPath))
-        fs.mkdirSync(sdkPath)
+            fs.mkdirSync(sdkPath)
 
         if (ar) {
             if (!fs.existsSync(ar)) {
