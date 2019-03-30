@@ -206,7 +206,7 @@ function installAIR(range, archive) {
 
             if (innerVer
              && !semver.satisfies(innerVer,
-                    semver.validRange(version))
+                    semver.validRange(version)))
             {
                 console.log(chalk `{cyan help:} given version not matched. Renaming...`)
                 fs.renameSync(compilerPath,
