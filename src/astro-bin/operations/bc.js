@@ -178,27 +178,12 @@ function installAIR(range, archive) {
     // #2 no-web-install
 
     function installNoWeb() {
-        const [archivePath, versionRaw] = archive.split(':')
-
-        if (!versionRaw) {
-            display.error(chalk `SDK version unspecified.\n
-  {cyan help:} specify SDK version as follows:\n
-    {italic $ astro bc install air -f compiler.zip{bold :32.0.0.89}}`)
-            process.exit(1)
-        }
-        
-        version = semver.coerce(versionRaw)
-
-        if (!semver.satisfies(version, range)) {
-            display.error(`Version not satisfied: ${version} ∉ ${range}`)
-            process.exit(1)
-        }
-
         if (!fs.existsSync(archivePath)) {
             display.error('Specified archive doesn\'t exist.')
             process.exit(1)
         }
 
+        version = semver.coerce('1.99999')
         createDirs()
         extract(archivePath, { dir: sdkPath, }, finishNoWeb)
     }
@@ -207,13 +192,12 @@ function installAIR(range, archive) {
         if (!err) {
             const readme = fs.readFileSync(
                 path.join(sdkPath, 'AIR SDK Readme.txt'), 'binary')
-            const [_, innerVer] = readme.match(/Adobe AIR ([^ ]+) SDK/)
+            version = semver.coerce(readme.match(/Adobe AIR ([^ ]+) SDK/)[1])
 
-            if (innerVer
-             && !semver.satisfies(innerVer,
-                    semver.validRange(version)))
+            if (!semver.satisfies(innerVer,
+                   semver.validRange(version)))
             {
-                console.log(chalk `{cyan help:} given version not matched. Renaming...`)
+                console.log(chalk `{yellow note:} given version not matched`)
                 fs.renameSync(compilerPath,
                     path.join(compilersDir, `air-${semver.coerce(innerVer)}`))
             }
@@ -249,7 +233,7 @@ function installAIR(range, archive) {
             compilers = JSON.parse(compilersRaw)
 
         compilers.push({ name: 'air', version, })
-        localStorage.setItem('bc', compilers)
+        localStorage.setItem('bc', JSON.stringify(compilers))
     }
 }
 
