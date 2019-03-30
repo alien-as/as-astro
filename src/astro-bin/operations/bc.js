@@ -72,7 +72,7 @@ installCli
     })
     .option({
         name: 'file',
-        label: 'f',
+        alias: 'f',
         typeLabel: '{underline path}',
         summary: 'Use existing archive',
     })
