@@ -187,7 +187,19 @@ function installAIR(range, ar) {
         }
 
         display.ok(`Successfuly installed ${display.wrapOkTerm('air')}`)
-        astroStorage.
+
+        const localStorage = astroStorage.localStorage()
+
+        let compilers = null
+        const compilersRaw = localStorage.getItem('bc')
+
+        if (!compilers)
+            compilers = []
+        else
+            compilers = JSON.parse(compilersRaw)
+
+        compilers.push({ name: air, version: ver, })
+        ...
     }
 }
 

@@ -12,6 +12,10 @@ let astroStorage = {
     _compilers: null,
     _defaultCompiler: null,
 
+    localStorage() {
+        return localStorage
+    },
+
     // ## Compiler data
 
     compilers() {
