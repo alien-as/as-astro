@@ -114,31 +114,8 @@ function installAIR(range, archive) {
 
     let version = null
 
-    if (archive) {
-        const [archivePath, versionRaw] = archive.split(':')
-
-        if (!versionRaw) {
-            display.error(chalk `SDK version unspecified.\n
-  {cyan help:} specify SDK version as follows:\n
-    {italic $ astro bc install air -f compiler.zip{bold :32.0.0.89}}`)
-            process.exit(1)
-        }
-        
-        version = semver.coerce(versionRaw)
-
-        if (!semver.satisfies(version, range)) {
-            display.error(`Version not satisfied: ${version} ∉ ${range}`)
-            process.exit(1)
-        }
-
-        if (!fs.existsSync(archivePath)) {
-            display.error('Specified archive doesn\'t exist.')
-            process.exit(1)
-        }
-
-        createDirs()
-        extract(archivePath, { dir: sdkPath, }, finishArchive)
-    }
+    if (archive)
+        installNoWeb()
     else {
         request('https://adobe.com/devnet/air/air-sdk-download.html',
         (err, resp, body) => {
@@ -200,7 +177,33 @@ function installAIR(range, archive) {
 
     // #2 no-web-install
 
-    function installNoWeb(err) {
+    function installNoWeb() {
+        const [archivePath, versionRaw] = archive.split(':')
+
+        if (!versionRaw) {
+            display.error(chalk `SDK version unspecified.\n
+  {cyan help:} specify SDK version as follows:\n
+    {italic $ astro bc install air -f compiler.zip{bold :32.0.0.89}}`)
+            process.exit(1)
+        }
+        
+        version = semver.coerce(versionRaw)
+
+        if (!semver.satisfies(version, range)) {
+            display.error(`Version not satisfied: ${version} ∉ ${range}`)
+            process.exit(1)
+        }
+
+        if (!fs.existsSync(archivePath)) {
+            display.error('Specified archive doesn\'t exist.')
+            process.exit(1)
+        }
+
+        createDirs()
+        extract(archivePath, { dir: sdkPath, }, finishNoWeb)
+    }
+
+    function finishNoWeb(err) {
         if (!err) {
             const readme = fs.readFileSync(
                 path.join(sdkPath, 'AIR SDK Readme.txt'), 'binary')
