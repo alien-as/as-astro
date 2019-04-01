@@ -354,7 +354,9 @@ useCli
             version: latest.version.toString(),
         }))
 
-        const {status, stdout, stderr} = spawnSync(args[0], args.slice(1))
+        const {status, stdout, stderr} = spawnSync(args[0], args)
+        ...
+        // Fix and call astro binary manually.
 
         if (status) {
             console.error(stderr)
@@ -367,8 +369,6 @@ useCli
             name: prev.name,
             version: prev.version.toString(),
         }))
-
-        ...
     })
 
 /// `bc` subcommand
