@@ -257,7 +257,7 @@ uninstallCli = new Command('uninstall')
 uninstallCli
     .option({
         name: 'name',
-        defaultOption: true ,
+        defaultOption: true,
     })
     .option({
         name: 'ver',
@@ -269,7 +269,7 @@ uninstallCli
             uninstallCli.printUsage()
         const {name, ver: rangeRaw} = args
         if (!name) {
-            display.error('compiler name required.')
+            display.error('compiler name required')
             process.exit(1)
         }
 
@@ -342,10 +342,26 @@ defaultCli
 useCli = new Command('use')
 useCli
     .usage(useCli.optionsSection())
-    .onParse(args => {
-        if (args.help)
-            useCli.printUsage()
-        console.log('Unimplemented')
+    .onParse(args => useCli.printUsage())
+    .onUnknown(args => {
+        const latest = cliLatestCompiler(args)
+
+        astroStorage.localStorage().setItem('default_bc', JSON.stringify({
+            name: latest.name,
+            version: latest.version,
+        }))
+
+        const {status, output: stdio} = spawnSync(args[0], args.slice(1))
+
+        for (let out of stdio) {
+            if (out) console.log(out)
+        }
+        if (status) process.exit(statusCode)
+
+        astroStorage.localStorage().setItem('default_bc', JSON.stringify({
+            name: prev.name,
+            version: prev.version,
+        }))
     })
 
 /// `bc` subcommand
