@@ -32,6 +32,7 @@ let showCli = null
   , sealCli = null
   , updateCli = null
   , defaultCli = null
+  , useCli = null
 
 /// `bc show` subcommand
 
@@ -297,126 +298,54 @@ uninstallCli
             JSON.stringify(compilers))
     })
 
-/*
-/// `bc XXX` subcommand
+/// `bc seal` subcommand
 
-xxxCli = new Command('XXX')
-xxxCli
-    .usage({
-        header: 'Does?',
-        content: `{italic \
-$ astro bc xxx
-$ astro bc xxx
-$ astro bc xxx}`,
-    })
-    .usage(xxxCli.optionsSection())
+sealCli = new Command('seal')
+sealCli
+    .usage(sealCli.optionsSection())
     .onParse(args => {
         if (args.help)
-            xxxCli.printUsage()
+            sealCli.printUsage()
+        console.log('Unimplemented')
     })
 
-/// `bc XXX` subcommand
+/// `bc update` subcommand
 
-xxxCli = new Command('XXX')
-xxxCli
-    .usage({
-        header: 'Does?',
-        content: `{italic \
-$ astro bc xxx
-$ astro bc xxx
-$ astro bc xxx}`,
-    })
-    .usage(xxxCli.optionsSection())
+updateCli = new Command('update')
+updateCli
+    .usage(updateCli.optionsSection())
     .onParse(args => {
         if (args.help)
-            xxxCli.printUsage()
+            updateCli.printUsage()
+        console.log('Unimplemented')
     })
 
-/// `bc XXX` subcommand
+/// `bc default` subcommand
 
-xxxCli = new Command('XXX')
-xxxCli
-    .usage({
-        header: 'Does?',
-        content: `{italic \
-$ astro bc xxx
-$ astro bc xxx
-$ astro bc xxx}`,
+defaultCli = new Command('default')
+defaultCli
+    .usage(defaultCli.optionsSection())
+    .onParse(args =>
+        defaultCli.printUsage())
+    .onUnknown(args => {
+        
+
+        astroStorage.localStorage().setItem('default_bc', JSON.stringify({
+            name: latest.name,
+            version: latest.version,
+        }))
     })
-    .usage(xxxCli.optionsSection())
+
+/// `bc use` subcommand
+
+useCli = new Command('use')
+useCli
+    .usage(useCli.optionsSection())
     .onParse(args => {
         if (args.help)
-            xxxCli.printUsage()
+            useCli.printUsage()
+        console.log('Unimplemented')
     })
-
-/// `bc XXX` subcommand
-
-xxxCli = new Command('XXX')
-xxxCli
-    .usage({
-        header: 'Does?',
-        content: `{italic \
-$ astro bc xxx
-$ astro bc xxx
-$ astro bc xxx}`,
-    })
-    .usage(xxxCli.optionsSection())
-    .onParse(args => {
-        if (args.help)
-            xxxCli.printUsage()
-    })
-
-/// `bc XXX` subcommand
-
-xxxCli = new Command('XXX')
-xxxCli
-    .usage({
-        header: 'Does?',
-        content: `{italic \
-$ astro bc xxx
-$ astro bc xxx
-$ astro bc xxx}`,
-    })
-    .usage(xxxCli.optionsSection())
-    .onParse(args => {
-        if (args.help)
-            xxxCli.printUsage()
-    })
-
-/// `bc XXX` subcommand
-
-xxxCli = new Command('XXX')
-xxxCli
-    .usage({
-        header: 'Does?',
-        content: `{italic \
-$ astro bc xxx
-$ astro bc xxx
-$ astro bc xxx}`,
-    })
-    .usage(xxxCli.optionsSection())
-    .onParse(args => {
-        if (args.help)
-            xxxCli.printUsage()
-    })
-
-/// `bc XXX` subcommand
-
-xxxCli = new Command('XXX')
-xxxCli
-    .usage({
-        header: 'Does?',
-        content: `{italic \
-$ astro bc xxx
-$ astro bc xxx
-$ astro bc xxx}`,
-    })
-    .usage(xxxCli.optionsSection())
-    .onParse(args => {
-        if (args.help)
-            xxxCli.printUsage()
-    })
-*/
 
 /// `bc` subcommand
 
@@ -445,10 +374,11 @@ $ astro bc update {gray # Updates installed compilers}}`,
         showCli,
         linkCli,
         installCli,
-        uninstallCli, /*
+        uninstallCli,
         sealCli,
-        updateCli
-        defaultCli */
+        updateCli,
+        defaultCli,
+        useCli,
     ])
     .onParse(args => cli.printUsage())
 
