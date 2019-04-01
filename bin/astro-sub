@@ -1,2 +1,2 @@
 #!/usr/bin/env node
-require('../src/astro-bin/astro-sub.js')
+require('../src/astro-bin/astro-sub')

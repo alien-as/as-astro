@@ -354,9 +354,9 @@ useCli
             version: latest.version.toString(),
         }))
 
-        const {status, stdout, stderr} = spawnSync(args[0], args)
-        ...
-        // Fix and call astro binary manually.
+        const {status, stdout, stderr} =
+            spawnSync('node', [path.join(__dirname, '../index'), ...args])
+        // Fix and call Astro binary manually.
 
         if (status) {
             console.error(stderr)
