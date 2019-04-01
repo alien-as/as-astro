@@ -33,7 +33,6 @@ let showCli = null
   , sealCli = null
   , updateCli = null
   , defaultCli = null
-  , useCli = null
 
 /// `bc show` subcommand
 
@@ -339,38 +338,6 @@ defaultCli
         }))
     })
 
-/// `bc use` subcommand
-
-useCli = new Command('use')
-useCli
-    .usage(useCli.optionsSection())
-    .onParse(args => useCli.printUsage())
-    .onUnknown(args => {
-        const prev = astroStorage.defaultCompiler()
-        const latest = cliLatestCompiler(args)
-
-        astroStorage.localStorage().setItem('default_bc', JSON.stringify({
-            name: latest.name,
-            version: latest.version.toString(),
-        }))
-
-        const {status, stdout, stderr} =
-            spawnSync('node', [path.join(__dirname, '../index'), ...args])
-        // Fix and call Astro binary manually.
-
-        if (status) {
-            console.error(stderr)
-            process.exit(statusCode)
-        } else {
-            console.log(stdout)
-        }
-
-        astroStorage.localStorage().setItem('default_bc', JSON.stringify({
-            name: prev.name,
-            version: prev.version.toString(),
-        }))
-    })
-
 /// `bc` subcommand
 
 const cli = new Command('bc')
@@ -402,7 +369,6 @@ $ astro bc update {gray # Updates installed compilers}}`,
         sealCli,
         updateCli,
         defaultCli,
-        useCli,
     ])
     .onParse(args => cli.printUsage())
 
