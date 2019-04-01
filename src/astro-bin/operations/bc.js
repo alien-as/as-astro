@@ -43,7 +43,9 @@ showCli
     .onParse(args => {
         if (args.help)
             showCli.printUsage()
+
         const defaultBc = astroStorage.defaultCompiler()
+
         for (let bc of astroStorage.compilers())
             console.log(chalk `{cyan -} ${bc.name} {gray (${bc.version})}`
                 + ((bc === defaultBc) ? chalk ` {cyan \xABdefault\xBB}` : ''))

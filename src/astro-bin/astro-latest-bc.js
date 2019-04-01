@@ -12,7 +12,7 @@ exports.cliLatestCompiler = args => {
     const ls = compilers.filter(o => o.name === name)
 
     if (verRange && ls.length) {
-        ls = ls.filter(o => semver.satisfies(o.version, verRange)
+        ls = ls.filter(o => semver.satisfies(o.version, verRange))
         args.splice(0, 1)
     }
 

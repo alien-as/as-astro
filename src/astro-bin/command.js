@@ -103,7 +103,7 @@ class Command {
                 cmd.parse(args2)
                 return false
             }
-            else if (!this._onUnknown || this._onUnknown(args._unknown))
+            else if (!this._onUnknown || this._onUnknown(args._unknown)) {
                 console.error(`Unknown operation: ${arg}`)
                 process.exit(1)
             }

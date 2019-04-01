@@ -1,6 +1,7 @@
 const {LocalStorage} = require('node-localstorage')
 
-const {Compiler}         = require('./compiler')
+const {Compiler, BuiltinCompiler, CustomCompiler} =
+            require('./compiler')
     , {validPackageName} = require('./validation')
 
 const path   = require('path')
@@ -26,8 +27,9 @@ let astroStorage = {
 
             if (raw) {
                 for (let r of raw) {
-                    let {name, verRaw} = r
+                    let {name, version: verRaw} = r
                     const ver = semver.coerce(verRaw)
+
                     if (!(validPackageName(name) && ver))
                         continue
                     let bc = null

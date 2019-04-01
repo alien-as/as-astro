@@ -27,13 +27,13 @@ class Compiler {
     execDoc(options) {}
 }
 
-class BuiltinCommand extends Command {
+class BuiltinCompiler extends Compiler {
     constructor(name, version) {
         super(name, version)
     }
 }
 
-class CustomCommand extends Command {
+class CustomCompiler extends Compiler {
     constructor(name, version) {
         super(name, version)
     }
@@ -41,6 +41,6 @@ class CustomCommand extends Command {
 
 module.exports = {
     Compiler,
-    BuiltinCommand,
-    CustomCommand,
+    BuiltinCompiler,
+    CustomCompiler,
 }
