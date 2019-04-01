@@ -103,17 +103,13 @@ class Command {
                 cmd.parse(args2)
                 return false
             }
-            else if (this._onUnknown)
-                this._onUnknown(args._unknown)
-            else {
+            else if (!this._onUnknown || this._onUnknown(args._unknown))
                 console.error(`Unknown operation: ${arg}`)
                 process.exit(1)
             }
         }
         else if (args._unknown) {
-            if (this._onUnknown)
-                this._onUnknown(args._unknown)
-            else {
+            if (!this._onUnknown || this._onUnknown(args._unknown)) {
                 if (arg[0] === '-')
                     console.error(`Unknown option: ${arg}`)
                 else
