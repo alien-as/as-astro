@@ -39,7 +39,7 @@ let astroStorage = {
                         bc = new CustomCompiler(name, ver)
                         bc._cliScript = r.cliScript || ''
                     }
-                    bc.isSealed = !r.isSealed
+                    bc.isSealed = !!r.isSealed
                     this._compilers.push(bc)
                 }
             }

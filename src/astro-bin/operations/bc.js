@@ -335,7 +335,7 @@ defaultCli
 
         astroStorage.localStorage().setItem('default_bc', JSON.stringify({
             name: latest.name,
-            version: latest.version,
+            version: latest.version.toString(),
         }))
     })
 
@@ -346,24 +346,29 @@ useCli
     .usage(useCli.optionsSection())
     .onParse(args => useCli.printUsage())
     .onUnknown(args => {
+        const prev = astroStorage.defaultCompiler()
         const latest = cliLatestCompiler(args)
 
         astroStorage.localStorage().setItem('default_bc', JSON.stringify({
             name: latest.name,
-            version: latest.version,
+            version: latest.version.toString(),
         }))
 
-        const {status, output: stdio} = spawnSync(args[0], args.slice(1))
+        const {status, stdout, stderr} = spawnSync(args[0], args.slice(1))
 
-        for (let out of stdio) {
-            if (out) console.log(out)
+        if (status) {
+            console.error(stderr)
+            process.exit(statusCode)
+        } else {
+            console.log(stdout)
         }
-        if (status) process.exit(statusCode)
 
         astroStorage.localStorage().setItem('default_bc', JSON.stringify({
             name: prev.name,
-            version: prev.version,
+            version: prev.version.toString(),
         }))
+
+        ...
     })
 
 /// `bc` subcommand

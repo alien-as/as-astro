@@ -22,6 +22,6 @@ exports.cliLatestCompiler = args => {
     }
 
     ls.sort((a, b) => semver.rcompare(a.version, b.version))
-    ls.splice(0, 1)
+    args.splice(0, 1)
     return ls[0]
 }
