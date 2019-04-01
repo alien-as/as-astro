@@ -1,7 +1,8 @@
 require('module-alias/register')
 
-const {Command} = require('@astro-bin/command')
-    ,  display  = require('@astro-bin/display')
+const {Command}           = require('@astro-bin/command')
+    ,  display            = require('@astro-bin/display')
+    , {cliLatestCompiler} = require('@astro-bin/astro-latest-bc')
 
 const {astroStorage} = require('@astro-lib/storage')
 
@@ -21,7 +22,7 @@ $ astro-sub {green <compiler>} {green [version]} {green <command>}}`
         cli.printUsage()
     })
     .onUnknown(args => {
-        const latest = ls.sort((a, b) => cliLatestVersion(args))
+        const latest = ls.sort((a, b) => cliLatestCompiler(args))
         latest.execCommand(args)
     })
 

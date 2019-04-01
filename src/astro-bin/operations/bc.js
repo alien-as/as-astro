@@ -1,6 +1,7 @@
-const {Command} = require('@astro-bin/command')
-    , structure = require('@astro-bin/structure')
-    , display   = require('@astro-bin/display')
+const {Command}           = require('@astro-bin/command')
+    , structure           = require('@astro-bin/structure')
+    , display             = require('@astro-bin/display')
+    , {cliLatestCompiler} = require('@astro-bin/astro-latest-bc')
 
 const {astroStorage,}     = require('@astro-lib/storage')
     , {validPackageName,} = require('@astro-lib/validation')
@@ -328,7 +329,7 @@ defaultCli
     .onParse(args =>
         defaultCli.printUsage())
     .onUnknown(args => {
-        
+        const latest = cliLatestCompiler(args)
 
         astroStorage.localStorage().setItem('default_bc', JSON.stringify({
             name: latest.name,
