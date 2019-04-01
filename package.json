@@ -5,7 +5,7 @@
   "main": "astro-lib/index.js",
   "bin": {
     "astro": "bin/astro",
-    "astro-sub", "bin/astro-sub"
+    "astro-sub": "bin/astro-sub"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
