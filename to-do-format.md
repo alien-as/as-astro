@@ -7,7 +7,7 @@ We're thinking in adopting XML rather than TOML... because it's art.
     <name>vulkan</name>
     <dependencies>
         <kit type='air' version='3.*'>
-            <dependency />
+            <dependency name='vertex-4d'/>
         </kit>
     </dependencies>
 </package>
