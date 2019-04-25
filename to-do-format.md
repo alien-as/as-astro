@@ -4,11 +4,11 @@ We're thinking in adopting XML rather than TOML... because it's art.
 
 ```xml
 <package>
-    <name>vulkan</name>
-    <version>0.1.0</version>
+    <name w='vulkan'/>
+    <version w='0.1.0'/>
     <dependencies>
-        <for-kit type='air' version='^32'>
-            <dependency name='vertex-4d'/>
+        <for-kit w='air' version='^32'>
+            <dependency w='vertex-4d'/>
         </for-kit>
     </dependencies>
 </package>
